@@ -1,0 +1,342 @@
+/* MAIN WRAPPER */
+.wrapper {
+  width: 100%;
+  padding: 60px 0;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(to top, var(--color-card-secondary), var(--color-card));
+}
+
+/* TITLES */
+.title {
+  text-align: center;
+  font-size: 55px;
+  font-weight: 700;
+  color: #f7a500;
+  font-family: 'Times New Roman', serif;
+}
+
+.more {
+  font-size: 26px;
+  font-family: 'Times New Roman', serif;
+  font-weight: 900;
+}
+
+.highlight {
+  color: var(--color-heading);
+  font-family: 'Times New Roman', serif;
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 19px;
+  color: var(--color-text);
+}
+
+/* ====================== */
+/* CONTENT GRID */
+/* ====================== */
+.content {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* LEFT MAIN CARD */
+.leftCard {
+  background: var(--color-card);
+  padding: 25px 30px;
+  border-radius: 14px;
+  box-shadow: 0px 8px 20px var(--color-shadow);
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  height: auto;
+  margin-left: 100px;
+  margin-top: 100px;
+
+}
+
+.quoteWrap {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+}
+
+.reviewText {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--color-text);
+  margin-bottom: 18px;
+}
+
+/* USER ROW */
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.userImg {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.userName {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.userRole {
+  font-size: 14px;
+  color: #f7a500;
+  margin-top: 4px;
+}
+
+.starRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.courseText {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* RIGHT SIDE LIST */
+.rightList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-right: 60px;
+}
+
+.reviewItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.reviewItem:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 247, 229, 0.4);
+}
+
+.activeReview {
+  background: rgba(255, 244, 209, 0.6) !important;
+  border-color: #f7a500;
+}
+
+.listImg {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+.itemInfo {
+  flex: 1;
+}
+
+.itemName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.itemRole {
+  font-size: 13px;
+  color: #f7a500;
+  margin-bottom: 5px;
+}
+
+.itemText {
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.starSmall {
+  opacity: 0.9;
+}
+
+/* ====================== */
+/* BOTTOM ORANGE CARD */
+/* ====================== */
+.another {
+  margin-top: 70px;
+  margin-left: 70px;
+  border-radius: 30px;
+  width: 90%;
+  height: 450px;
+  background: linear-gradient(to right, #ffa52f, #d76800);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.another p {
+  font-size: 35px;
+  font-style: italic;
+  font-weight: 500;
+  color: white;
+  width: 80%;
+  text-align: center;
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.sarahImg {
+  border-radius: 50%;
+  border: 3px solid #ffcc86;
+  width: 70px;
+  height: 70px;
+}
+
+.sarahImg1 {
+  margin-bottom: 30px;
+}
+
+.profileText {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileName {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 3px;
+}
+
+.profileRole {
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff2d9;
+}
+
+/* ====================== */
+/* RESPONSIVE QUERIES */
+/* ====================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .title {
+    font-size: 45px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .leftCard {
+    margin-left: 0;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .another {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Large Mobiles */
+@media (max-width: 768px) {
+  .title {
+    font-size: 38px;
+  }
+
+  .subtitle {
+    font-size: 17px;
+  }
+
+  .leftCard {
+    padding: 20px;
+  }
+
+  .another {
+    height: auto;
+    padding: 40px 25px;
+  }
+
+  .another p {
+    font-size: 28px;
+  }
+
+  .profileRow {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Medium Mobiles */
+@media (max-width: 600px) {
+  .title {
+    font-size: 34px;
+  }
+
+  .reviewItem {
+    padding: 14px;
+  }
+
+  .another p {
+    font-size: 24px;
+  }
+}
+
+/* Small Phones (Galaxy Fold) */
+@media (max-width: 480px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .another p {
+    font-size: 22px;
+  }
+
+  .sarahImg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .leftCard {
+    padding: 18px;
+  }
+
+  .reviewText {
+    font-size: 16px;
+  }
+}
+
+/* Ultra Small Phones */
+@media (max-width: 380px) {
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .another p {
+    font-size: 20px;
+  }
+}

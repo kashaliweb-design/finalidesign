@@ -1,0 +1,313 @@
+.section {
+  width: 100%;
+  text-align: center;
+  padding: 60px 0;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, var(--color-card), var(--color-card-secondary));
+}
+
+/* TITLE */
+.title {
+  font-size: 56px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #ffcd82, #a94100);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+
+.highlight {
+  color: #ff9e22;
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-size: 18px;
+  color: var(--color-text);
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* BUTTONS */
+.buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.btnFilled {
+  background: #ff9e22;
+  padding: 8px 28px;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btnFilled:hover {
+  background: #e38614;
+}
+
+.btnOutline {
+  padding: 9px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  background: white;
+  border: 1px solid #ff9e22;
+  color: #ff9e22;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btnOutline:hover {
+  background: #fff5e6;
+}
+
+/* REVIEW CARD */
+.reviewCard {
+  width: 70%;
+  margin: 50px auto 30px auto;
+  background: linear-gradient(-55deg, var(--color-card), var(--color-card-secondary));
+  padding: 50px 35px;
+  border-radius: 22px;
+  box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.quoteIcon {
+  position: absolute;
+  top: -20px;
+  left: 25px;
+}
+
+.reviewText {
+  font-size: 22px;
+  font-style: italic;
+  color: var(--color-text);
+  margin-bottom: 25px;
+}
+
+/* PROFILE IMAGES */
+.profileRow {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.profileImg {
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: 0.25s ease;
+}
+
+.profileImg:hover {
+  transform: scale(1.08);
+}
+
+.activeImg {
+  border-color: #ffb44c;
+  transform: scale(1.1);
+}
+
+/* NAME + ROLE */
+.userName {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.userRole {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+/* FEATURES */
+.features {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 992px) {
+
+  .title {
+    font-size: 46px;
+  }
+
+  .subtitle {
+    width: 75%;
+    font-size: 17px;
+  }
+
+  .reviewCard {
+    width: 80%;
+    padding: 40px 30px;
+  }
+
+  .reviewText {
+    font-size: 20px;
+  }
+
+  .features {
+    gap: 30px;
+    font-size: 14px;
+  }
+
+  .btnFilled,
+  .btnOutline {
+    padding: 8px 25px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 768px) {
+
+  .title {
+    font-size: 38px;
+  }
+
+  .subtitle {
+    width: 85%;
+    font-size: 16px;
+  }
+
+  .buttons {
+    gap: 14px;
+  }
+
+  .btnFilled,
+  .btnOutline {
+    padding: 7px 22px;
+    font-size: 15px;
+  }
+
+  .reviewCard {
+    width: 90%;
+    padding: 35px 25px;
+  }
+
+  .reviewText {
+    font-size: 19px;
+  }
+
+  .profileRow {
+    gap: 10px;
+  }
+
+  .profileImg {
+    width: 55px;
+    height: 55px;
+  }
+
+  .userName {
+    font-size: 16px;
+  }
+
+  .userRole {
+    font-size: 13px;
+  }
+
+  .features {
+    flex-direction: column;
+    gap: 15px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+
+  .title {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    width: 95%;
+    font-size: 15px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btnFilled,
+  .btnOutline {
+    padding: 8px 20px;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 15px;
+  }
+
+  .reviewCard {
+    width: 92%;
+    padding: 28px 22px;
+  }
+
+  .reviewText {
+    font-size: 17px;
+  }
+
+  .profileImg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .userName {
+    font-size: 15px;
+  }
+
+  .userRole {
+    font-size: 12px;
+  }
+
+  .features {
+    gap: 14px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 380px) {
+
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    width: 98%;
+    font-size: 14px;
+  }
+
+  .btnFilled,
+  .btnOutline {
+    padding: 7px 18px;
+    font-size: 14px;
+  }
+
+  .reviewText {
+    font-size: 16px;
+  }
+
+  .profileImg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .features {
+    font-size: 12px;
+  }
+}

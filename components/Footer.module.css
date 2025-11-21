@@ -1,0 +1,290 @@
+.footer {
+  background: #000000;
+  padding: 60px 80px 30px 80px;
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+  color: #ffffff;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.left {
+  width: 30%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.bookIcon {
+  color: #f7a500;
+}
+
+.desc {
+  margin: 0 0 30px 0;
+  line-height: 1.7;
+  font-size: 14px;
+  color: #b0b0b0;
+}
+
+/* NEWSLETTER */
+.newsletterBox {
+  margin-bottom: 30px;
+}
+
+.nlInput {
+  display: flex;
+  width: 100%;
+  background: #1a1a1a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.nlInput input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.nlInput input::placeholder {
+  color: #666666;
+}
+
+.nlBtn {
+  background: #f7a500;
+  width: 50px;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.nlBtn:hover {
+  background: #ff9e22;
+}
+
+.social {
+  display: flex;
+  gap: 16px;
+}
+
+.social .icon {
+  width: 18px;
+  height: 18px;
+  color: #f7a500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.social .icon:hover {
+  color: #ff9e22;
+}
+
+/* RIGHT COLUMNS */
+.columns {
+  display: flex;
+  gap: 60px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.col h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.col a {
+  display: block;
+  margin-bottom: 14px;
+  text-decoration: none;
+  color: #f7a500;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.col a:hover {
+  color: #ff9e22;
+}
+
+
+/* Bottom */
+.bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 30px;
+}
+
+.bottomLinks a {
+  text-decoration: none;
+  color: #b0b0b0;
+  font-size: 13px;
+  transition: color 0.3s ease;
+}
+
+.bottomLinks a:hover {
+  color: #f7a500;
+}
+/* ===================================== */
+/* RESPONSIVENESS ADDED FOR ALL SCREENS  */
+/* ===================================== */
+
+/* Large Tablets (max-width: 1100px) */
+@media (max-width: 1100px) {
+  .footer {
+    padding: 50px 50px 30px 50px;
+  }
+  .footerContainer {
+    gap: 40px;
+  }
+  .columns {
+    gap: 50px;
+  }
+}
+
+/* Tablets (max-width: 900px) */
+@media (max-width: 900px) {
+  .footerContainer {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .left {
+    width: 100%;
+  }
+
+  .columns {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .col {
+    width: 45%;
+  }
+
+  .bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .bottomLinks a {
+    margin: 0 10px;
+  }
+}
+
+/* Mobile (max-width: 600px) */
+@media (max-width: 600px) {
+  .footer {
+    padding: 40px 25px 25px 25px;
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .desc {
+    font-size: 15px;
+  }
+
+  .social {
+    font-size: 20px;
+  }
+
+  .columns {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .col {
+    width: 100%;
+  }
+
+  .col a {
+    font-size: 14px;
+  }
+
+  .newsletterBox {
+    padding: 15px;
+  }
+
+  .nlInput input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .nlBtn {
+    width: 50px;
+    font-size: 18px;
+  }
+
+  .bottomLinks a {
+    font-size: 14px;
+  }
+}
+
+/* Small Mobile (max-width: 400px) */
+@media (max-width: 400px) {
+  .brand {
+    font-size: 18px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+
+  .social {
+    gap: 14px;
+    font-size: 18px;
+  }
+
+  .nlBtn {
+    width: 45px;
+  }
+
+  .columns {
+    gap: 25px;
+  }
+
+  .col h3 {
+    font-size: 16px;
+  }
+
+  .col a {
+    font-size: 13px;
+  }
+
+  .bottom {
+    font-size: 13px;
+  }
+}
