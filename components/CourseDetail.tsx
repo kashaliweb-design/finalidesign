@@ -3,8 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./CourseDetail.module.css";
+import { Course } from "@/types/course";
 
-export default function CourseDetail({ course }) {
+interface CourseDetailProps {
+  course: Course;
+}
+
+export default function CourseDetail({ course }: CourseDetailProps) {
   if (!course) return null;
 
   const chips = [
@@ -198,4 +203,3 @@ export default function CourseDetail({ course }) {
     </div>
   );
 }
-

@@ -1,4 +1,6 @@
-export const courses = [
+import { Course } from "@/types/course";
+
+export const courses: Course[] = [
   {
     id: 1,
     slug: "ultimate-aws-certified-solutions-architect-associate-2025",
@@ -275,6 +277,5 @@ export const courses = [
   },
 ];
 
-export const getCourseBySlug = (slug) =>
+export const getCourseBySlug = (slug: string): Course | undefined =>
   courses.find((course) => course.slug === slug);
-

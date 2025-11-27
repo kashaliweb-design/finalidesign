@@ -3,8 +3,15 @@ import { useState } from "react";
 import Image from "next/image";
 import styles from "./LevelUpSection.module.css";
 
+interface Review {
+  text: string;
+  name: string;
+  role: string;
+  img: string;
+}
+
 export default function LevelUpSection() {
-  const reviews = [
+  const reviews: Review[] = [
     {
       text: "51skills completely transformed my career path...",
       name: "Sarah Johnson",
@@ -25,11 +32,10 @@ export default function LevelUpSection() {
     },
   ];
 
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number>(0);
 
   return (
     <div className={styles.section}>
-      {/* TITLE */}
       <h2 className={styles.title}>
         Ready to Level Up?
       </h2>
@@ -39,13 +45,11 @@ export default function LevelUpSection() {
         courses, hands-on projects, and a vibrant community.
       </p>
 
-      {/* BUTTONS */}
       <div className={styles.buttons}>
         <button className={styles.btnFilled}>Get Started</button>
         <button className={styles.btnOutline}>Browse Courses</button>
       </div>
 
-      {/* REVIEW CARD */}
       <div className={styles.reviewCard}>
         <Image
           src="/assets/quote.png"
@@ -57,7 +61,6 @@ export default function LevelUpSection() {
 
         <p className={styles.reviewText}>{reviews[active].text}</p>
 
-        {/* PROFILE IMAGES */}
         <div className={styles.profileRow}>
           {reviews.map((item, index) => (
             <Image
@@ -74,12 +77,10 @@ export default function LevelUpSection() {
           ))}
         </div>
 
-        {/* NAME + ROLE */}
         <p className={styles.userName}>{reviews[active].name}</p>
         <p className={styles.userRole}>{reviews[active].role}</p>
       </div>
 
-      {/* FEATURES */}
       <div className={styles.features}>
         <div className={styles.featureItem}>
           ⭐ 30-day money-back guarantee

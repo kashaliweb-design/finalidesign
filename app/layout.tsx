@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Poppins } from "next/font/google";
+import { Metadata } from "next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -10,12 +11,16 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "My Website",
   description: "Next.js frontend project",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className={poppins.variable}>

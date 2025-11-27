@@ -7,7 +7,6 @@ export default function FeaturesSection() {
   return (
     <section className={styles.wrapper}>
 
-      {/* TITLE SECTION */}
       <div className={styles.header}>
         <span className={styles.tagline}>Why students love us</span>
         <h2 className={styles.title}>Features </h2>
@@ -19,12 +18,8 @@ export default function FeaturesSection() {
         </p>
       </div>
 
-      {/* TIMELINE */}
       <div className={styles.timeline}></div>
 
-      {/* --- Your existing 4 cards stay unchanged --- */}
-
-      {/* CARD 1 */}
       <div className={`${styles.card} ${styles.cardLeft}`}>
         <div className={styles.cardInner}>
           <div className={styles.iconBoxYellow}><BookOpen size={34} /></div>
@@ -43,7 +38,6 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      {/* CARD 2 */}
       <div className={`${styles.card1} ${styles.cardRight}`}>
         <div className={styles.cardInner}>
           <div className={styles.iconBoxGray}><Users size={34} /></div>
@@ -62,7 +56,6 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      {/* CARD 3 */}
       <div className={`${styles.card} ${styles.cardLeft}`}>
         <div className={styles.cardInner}>
           <div className={styles.iconBoxYellow}><Award size={34} /></div>
@@ -81,7 +74,6 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      {/* CARD 4 */}
       <div className={`${styles.card1} ${styles.cardRight}`}>
         <div className={styles.cardInner}>
           <div className={styles.iconBoxGray}><Users size={34} /></div>
@@ -100,7 +92,6 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      {/* ⭐ NEW STATS BOX SECTION ⭐ */}
       <div className={styles.statsWrapper}>
         <h2 className={styles.statsTitle}>
           Why Thousands Choose <span className={styles.brand}>51skills</span>

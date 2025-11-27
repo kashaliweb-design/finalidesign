@@ -3,8 +3,19 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "./StudentStories.module.css";
 
+interface Review {
+  id: number;
+  name: string;
+  role: string;
+  company?: string;
+  text: string;
+  courses?: string;
+  img: string;
+  rating: string;
+}
+
 export default function StudentStories() {
-  const reviews = [
+  const reviews: Review[] = [
     {
       id: 1,
       name: "Sarah Johnson",
@@ -19,7 +30,7 @@ export default function StudentStories() {
       id: 2,
       name: "Michael Chen",
       role: "Data Scientist",
-      text: "I’ve taken several courses on 51skills and each one has significantly improved my skills.",
+      text: "I've taken several courses on 51skills and each one has significantly improved my skills.",
       img: "/assets/micheal.jpg",
       rating: "/assets/stars.png",
     },
@@ -49,7 +60,7 @@ export default function StudentStories() {
     },
   ];
 
-  const [active, setActive] = useState(reviews[0]);
+  const [active, setActive] = useState<Review>(reviews[0]);
 
   return (
     <section className={styles.wrapper}>
@@ -63,13 +74,12 @@ export default function StudentStories() {
       </p>
 
       <div className={styles.content}>
-        {/* LEFT SIDE MAIN CARD */}
         <div className={styles.leftCard}>
           <div className={styles.quoteWrap}>
             <Image src="/assets/quote.png" width={30} height={30} alt="quote" />
           </div>
 
-          <p className={styles.reviewText}>“{active.text}”</p>
+          <p className={styles.reviewText}>"{active.text}"</p>
 
           <div className={styles.userRow}>
             
@@ -95,7 +105,6 @@ export default function StudentStories() {
           </div>
         </div>
 
-        {/* RIGHT SIDE LIST */}
         <div className={styles.rightList}>
             <div className={styles.more}>More Student Stories</div>
           {reviews.map((review) => (

@@ -5,17 +5,19 @@ import { useRouter } from "next/navigation";
 import styles from "./Navbar.module.css";
 import { Search, Globe, BookOpen, ShoppingCart, Bell, User, Sun, Menu } from "lucide-react";
 
+type ThemeMode = "light" | "dark" | "system";
+type DropdownItem = "explore" | "teach" | "theme" | "language" | "learning" | "cart" | "notifications" | "profile" | null;
+
 export default function Navbar() {
   const router = useRouter();
-  const [cartCount] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [cartCount] = useState<number>(0);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
-  const [activeDropdown, setActiveDropdown] = useState(null); // Track the active dropdown
-  const [hoverTimeout, setHoverTimeout] = useState(null); // Track the timeout for hover
-  const [themeMode, setThemeMode] = useState("system"); // Track the current theme mode
+  const [activeDropdown, setActiveDropdown] = useState<DropdownItem>(null);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [themeMode, setThemeMode] = useState<ThemeMode>("system");
 
-  // Toggle function for theme
-  const handleThemeChange = (mode) => {
+  const handleThemeChange = (mode: ThemeMode) => {
     setThemeMode(mode);
     if (mode === "light") {
       document.documentElement.setAttribute("data-theme", "light");
@@ -29,41 +31,37 @@ export default function Navbar() {
     }
   };
 
-  const handleMouseEnter = (item) => {
+  const handleMouseEnter = (item: DropdownItem) => {
     if (hoverTimeout) {
-      clearTimeout(hoverTimeout); // Clear the previous timeout if any
+      clearTimeout(hoverTimeout);
     }
-    setActiveDropdown(item); // Optionally, you can enable hover behavior
+    setActiveDropdown(item);
   };
 
   const handleMouseLeave = () => {
     const timeout = setTimeout(() => {
-      setActiveDropdown(null); // Close the dropdown after 1 second
-    }, 1000); // 1 second delay
-    setHoverTimeout(timeout); // Store the timeout ID to clear it if necessary
+      setActiveDropdown(null);
+    }, 1000);
+    setHoverTimeout(timeout);
   };
 
-  const handleClick = (item) => {
+  const handleClick = (item: DropdownItem) => {
     if (activeDropdown === item) {
-      setActiveDropdown(null); // If the clicked item is already open, close it
+      setActiveDropdown(null);
     } else {
-      setActiveDropdown(item); // Otherwise, open the clicked item and close the previous one
+      setActiveDropdown(item);
     }
   };
 
   return (
     <>
-      {/* NAVBAR */}
       <nav className={styles.navbar}>
         <div className={styles.container}>
-          {/* Left Section */}
           <div className={styles.left}>
-            {/* Hamburger Icon (mobile only) */}
             <button className={styles.hamburger} onClick={() => setSidebarOpen(true)}>
               <Menu size={24} />
             </button>
 
-            {/* Logo */}
             <button
               type="button"
               className={styles.logo}
@@ -72,7 +70,6 @@ export default function Navbar() {
               51Skills
             </button>
 
-            {/* Desktop Menu */}
             <div className={styles.menu}>
               <div
                 className={`${styles.menuItem} ${activeDropdown === 'explore' ? styles.active : ''}`}
@@ -123,7 +120,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Search */}
           <div className={styles.searchWrapper}>
             <div className={styles.searchBox}>
               <Search className={styles.searchIcon} />
@@ -131,9 +127,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Right Icons */}
           <div className={styles.right}>
-            {/* Theme Mode Icon */}
             <div
               className={styles.iconBtn1}
               onClick={() => handleClick('theme')}
@@ -149,7 +143,6 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Language Dropdown */}
             <div
               className={`${styles.iconBtn} ${activeDropdown === 'language' ? styles.active : ''}`}
               onMouseEnter={() => handleMouseEnter('language')}
@@ -171,7 +164,6 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* My Learning Dropdown */}
             <div
               className={`${styles.iconBtn} ${activeDropdown === 'learning' ? styles.active : ''}`}
               onMouseEnter={() => handleMouseEnter('learning')}
@@ -192,7 +184,6 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Shopping Cart Dropdown */}
             <div
               className={`${styles.iconBtn} ${activeDropdown === 'cart' ? styles.active : ''}`}
               onMouseEnter={() => handleMouseEnter('cart')}
@@ -212,7 +203,6 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Notifications Dropdown */}
             <div
               className={`${styles.iconBtn} ${activeDropdown === 'notifications' ? styles.active : ''}`}
               onMouseEnter={() => handleMouseEnter('notifications')}
@@ -232,7 +222,6 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* User Profile Dropdown */}
             <div
               className={`${styles.iconBtn} ${activeDropdown === 'profile' ? styles.active : ''}`}
               onMouseEnter={() => handleMouseEnter('profile')}

@@ -9,7 +9,6 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
 
-        {/* LEFT SECTION */}
         <div className={styles.left}>
           <div className={styles.brand}>
             <BookOpen size={28} strokeWidth={2} className={styles.bookIcon} />
@@ -20,7 +19,6 @@ export default function Footer() {
             Empowering learners worldwide with cutting-edge online education and skills that matter in today's digital economy.
           </p>
 
-          {/* NEWSLETTER */}
           <div className={styles.newsletterBox}>
             <div className={styles.nlInput}>
               <input type="email" placeholder="Your email" />
@@ -30,7 +28,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* SOCIAL ICONS */}
           <div className={styles.social}>
             <FaFacebookF className={styles.icon} />
             <FaTwitter className={styles.icon} />
@@ -39,7 +36,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* RIGHT SECTION */}
         <div className={styles.columns}>
           <div className={styles.col}>
             <h3>Explore</h3>

@@ -8,24 +8,21 @@ const IMAGES = [1, 2, 3, 4, 5, 6];
 
 export default function Hero() {
 
-  // AUTO-ADD animation delay to each letter
   useEffect(() => {
-    const letters = document.querySelectorAll(`.${styles.subtitle} span`);
+    const letters = document.querySelectorAll<HTMLSpanElement>(`.${styles.subtitle} span`);
 
     letters.forEach((el, i) => {
-      el.style.animationDelay = `${i * 0.03}s`; // adjust speed (0.03 = perfect)
+      el.style.animationDelay = `${i * 0.03}s`;
     });
   }, []);
 
   return (
     <section className={styles.heroSection}>
-      {/* LEFT SIDE */}
       <div className={styles.left}>
         <h1 className={styles.title}>
           Unlock Your <span>Potential</span> with <br /> 51skills
         </h1>
 
-        {/* LETTER-BY-LETTER ANIMATED SUBTITLE */}
         <p className={styles.subtitle}>
 
           <span>D</span><span>i</span><span>s</span><span>c</span><span>o</span><span>v</span><span>e</span><span>r</span><span> </span>
@@ -53,7 +50,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* RIGHT SIDE – SCROLLING IMAGE COLUMNS */}
       <div className={styles.right}>
 
         <div className={styles.fadeLeft}></div>
