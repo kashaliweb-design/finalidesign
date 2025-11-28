@@ -1,9 +1,60 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import styles from "./FeaturesSection.module.css";
 import { BookOpen, Users, Award } from "lucide-react";
 
 export default function FeaturesSection() {
+  const [courses, setCourses] = useState(0);
+  const [instructors, setInstructors] = useState(0);
+  const [students, setStudents] = useState(0);
+  const [satisfaction, setSatisfaction] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          animateCounter(setCourses, 10000, 2000);
+          animateCounter(setInstructors, 500, 2000);
+          animateCounter(setStudents, 2000000, 2500);
+          animateCounter(setSatisfaction, 98, 2000);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  const animateCounter = (setter: (val: number) => void, target: number, duration: number) => {
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setter(target);
+        clearInterval(timer);
+      } else {
+        setter(Math.floor(current));
+      }
+    }, 16);
+  };
+
+  const formatNumber = (num: number, suffix: string) => {
+    if (suffix === 'k+') return `${(num / 1000).toFixed(0)}k+`;
+    if (suffix === 'M+') return `${(num / 1000000).toFixed(1)}M+`;
+    if (suffix === '%') return `${num}%`;
+    return `${num}${suffix}`;
+  };
   return (
     <section className={styles.wrapper}>
 
@@ -92,7 +143,7 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      <div className={styles.statsWrapper}>
+      <div className={styles.statsWrapper} ref={statsRef}>
         <h2 className={styles.statsTitle}>
           Why Thousands Choose <span className={styles.brand}>51skills</span>
         </h2>
@@ -101,25 +152,25 @@ export default function FeaturesSection() {
 
           <div className={styles.statsItem}>
             <div className={styles.statsIcon}><BookOpen size={28} /></div>
-            <h3 className={styles.statsNumber}>10k+</h3>
+            <h3 className={styles.statsNumber}>{formatNumber(courses, 'k+')}</h3>
             <p className={styles.statsLabel}>Courses</p>
           </div>
 
           <div className={styles.statsItem}>
             <div className={styles.statsIcon}><Users size={28} /></div>
-            <h3 className={styles.statsNumber}>500+</h3>
+            <h3 className={styles.statsNumber}>{formatNumber(instructors, '+')}</h3>
             <p className={styles.statsLabel}>Instructors</p>
           </div>
 
           <div className={styles.statsItem}>
             <div className={styles.statsIcon}><Users size={28} /></div>
-            <h3 className={styles.statsNumber}>2M+</h3>
+            <h3 className={styles.statsNumber}>{formatNumber(students, 'M+')}</h3>
             <p className={styles.statsLabel}>Students</p>
           </div>
 
           <div className={styles.statsItem}>
             <div className={styles.statsIcon}><Award size={28} /></div>
-            <h3 className={styles.statsNumber}>98%</h3>
+            <h3 className={styles.statsNumber}>{formatNumber(satisfaction, '%')}</h3>
             <p className={styles.statsLabel}>Satisfaction</p>
           </div>
 

@@ -13,11 +13,11 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 8px 20px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px;
 }
 
 /* LEFT SECTION */
@@ -32,7 +32,7 @@
   font-weight: 800;
   color: #f7a500;
   white-space: nowrap;
-  margin-left: 10px;
+  margin-left: 0px;
   background: none;
   border: none;
   cursor: pointer;
@@ -355,8 +355,8 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-right: 20px;
+  gap: 10px;
+  margin-right: 10px;
 }
 
 /* CIRCLE ICON BUTTON */
@@ -517,7 +517,17 @@
 @media (max-width: 768px) {
 
   .container {
-    padding: 10px 14px;
+    padding: 10px 8px;
+    gap: 4px;
+  }
+
+  .left {
+    gap: 8px;
+  }
+
+  .right {
+    gap: 8px;
+    margin-right: 8px;
   }
 
   /* Hide desktop menu */
@@ -555,12 +565,16 @@
 @media (max-width: 600px) {
 
   .container {
-    padding: 10px 12px;
-    gap: 10px;
+    padding: 8px 6px;
+    gap: 4px;
+  }
+
+  .left {
+    gap: 6px;
   }
 
   .logo {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   /* Reduce search size */
@@ -574,20 +588,30 @@
 
   /* Align icons better */
   .right {
-    gap: 5px;
-    margin-right: 5px;
+    gap: 6px;
+    margin-right: 6px;
   }
 }
 @media (max-width: 480px) {
 
   /* Reduce navbar height */
   .container {
-    padding: 8px 10px;
+    padding: 6px 4px;
+    gap: 2px;
+  }
+
+  .left {
+    gap: 4px;
+  }
+
+  .right {
+    gap: 5px;
+    margin-right: 4px;
   }
 
   .logo {
-    font-size: 18px;
-    margin-left: 4px;
+    font-size: 16px;
+    margin-left: 0px;
   }
 
   /* Search compact */
@@ -631,11 +655,21 @@
 @media (max-width: 380px) {
 
   .container {
-    gap: 6px;
+    gap: 2px;
+    padding: 6px 2px;
+  }
+
+  .left {
+    gap: 2px;
   }
 
   .logo {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .right {
+    gap: 4px;
+    margin-right: 2px;
   }
 
   /* Make search bar very small but usable */

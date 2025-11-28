@@ -244,6 +244,32 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+
+      {/* Sidebar for Mobile */}
+      {sidebarOpen && (
+        <>
+          <div className={styles.overlay} onClick={() => setSidebarOpen(false)} />
+          <div className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
+            <div className={styles.sidebarHeader}>
+              <span>Menu</span>
+              <button className={styles.closeBtn} onClick={() => setSidebarOpen(false)}>
+                ✕
+              </button>
+            </div>
+            <div className={styles.sidebarLinks}>
+              <p onClick={() => { router.push('/'); setSidebarOpen(false); }}>Home</p>
+              <p onClick={() => { router.push('/#courses'); setSidebarOpen(false); }}>Courses</p>
+              <p>Development</p>
+              <p>Business</p>
+              <p>IT & Software</p>
+              <p>Design</p>
+              <p>Marketing</p>
+              <p>Teach on 51Skills</p>
+              <p>My Learning</p>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
