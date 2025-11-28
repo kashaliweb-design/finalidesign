@@ -149,6 +149,12 @@
   color: var(--color-text);
 }
 
+.required {
+  color: #ef4444;
+  margin-left: 2px;
+  font-weight: 600;
+}
+
 .inputGroup input {
   padding: 12px 16px;
   border: 1px solid var(--color-input-border);
@@ -167,6 +173,40 @@
 
 .inputGroup input::placeholder {
   color: var(--color-muted);
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  transition: color 0.3s ease;
+}
+
+.eyeButton:hover {
+  color: var(--color-text);
+}
+
+.eyeButton svg {
+  width: 20px;
+  height: 20px;
 }
 
 .forgotPassword {
@@ -204,6 +244,39 @@
 .submitButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(247, 165, 0, 0.3);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submitButton:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.errorMessage {
+  padding: 12px 16px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.successMessage {
+  padding: 12px 16px;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 8px;
+  color: #22c55e;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
 .divider {
