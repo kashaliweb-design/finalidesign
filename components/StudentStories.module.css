@@ -115,6 +115,7 @@
   flex-direction: column;
   gap: 15px;
   margin-right: 60px;
+  padding: 0 20px;
 }
 
 .reviewItem {
@@ -244,6 +245,7 @@
   .content {
     grid-template-columns: 1fr;
     gap: 30px;
+    padding: 0 20px;
   }
 
   .leftCard {
@@ -252,33 +254,72 @@
     width: 100%;
   }
 
+  .rightList {
+    margin-right: 0;
+    padding: 0;
+  }
+
   .another {
-    margin-left: 0;
-    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: calc(100% - 40px);
   }
 }
 
 /* Large Mobiles */
 @media (max-width: 768px) {
+  .wrapper {
+    padding: 40px 0;
+  }
+
   .title {
     font-size: 38px;
+    padding: 0 15px;
   }
 
   .subtitle {
     font-size: 17px;
+    padding: 0 15px;
+  }
+
+  .content {
+    padding: 0 15px;
   }
 
   .leftCard {
     padding: 20px;
   }
 
+  .more {
+    font-size: 22px;
+  }
+
+  .reviewItem {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .itemText {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .starSmall {
+    width: 70px;
+    height: auto;
+  }
+
   .another {
     height: auto;
     padding: 40px 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+    width: calc(100% - 30px);
   }
 
   .another p {
     font-size: 28px;
+    width: 90%;
   }
 
   .profileRow {
@@ -293,23 +334,104 @@
     font-size: 34px;
   }
 
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .more {
+    font-size: 20px;
+  }
+
   .reviewItem {
-    padding: 14px;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .listImg {
+    width: 45px;
+    height: 45px;
+  }
+
+  .itemName {
+    font-size: 14px;
+  }
+
+  .itemRole {
+    font-size: 12px;
+  }
+
+  .itemText {
+    font-size: 11px;
+  }
+
+  .starSmall {
+    width: 60px;
   }
 
   .another p {
     font-size: 24px;
+    width: 95%;
   }
 }
 
 /* Small Phones (Galaxy Fold) */
 @media (max-width: 480px) {
   .title {
-    font-size: 30px;
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .more {
+    font-size: 18px;
+  }
+
+  .reviewItem {
+    padding: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .listImg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .itemInfo {
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .itemName {
+    font-size: 13px;
+  }
+
+  .itemText {
+    font-size: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .starSmall {
+    width: 55px;
+    margin-left: auto;
+  }
+
+  .another {
+    padding: 30px 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
   }
 
   .another p {
-    font-size: 22px;
+    font-size: 20px;
+    width: 100%;
   }
 
   .sarahImg {
@@ -317,26 +439,76 @@
     height: 60px;
   }
 
+  .sarahImg1 {
+    width: 50px;
+    height: 50px;
+  }
+
   .leftCard {
-    padding: 18px;
+    padding: 16px;
   }
 
   .reviewText {
+    font-size: 15px;
+  }
+
+  .userName {
     font-size: 16px;
+  }
+
+  .userRole {
+    font-size: 13px;
   }
 }
 
 /* Ultra Small Phones */
 @media (max-width: 380px) {
   .title {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .subtitle {
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .more {
+    font-size: 16px;
+  }
+
+  .reviewItem {
+    padding: 8px;
+  }
+
+  .listImg {
+    width: 35px;
+    height: 35px;
+  }
+
+  .itemName {
+    font-size: 12px;
+  }
+
+  .itemRole {
+    font-size: 11px;
+  }
+
+  .itemText {
+    font-size: 9px;
+  }
+
+  .starSmall {
+    width: 50px;
   }
 
   .another p {
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .profileName {
+    font-size: 18px;
+  }
+
+  .profileRole {
+    font-size: 12px;
   }
 }

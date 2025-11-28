@@ -31,7 +31,8 @@
   background: #0f0f0f;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #2a2a2a;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   text-decoration: none;
   color: inherit;
@@ -42,9 +43,7 @@
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  border-color: #f7a500;
-  border-width: 2px;
+  box-shadow: 0 8px 24px rgba(247, 165, 0, 0.3);
 }
 
 .badge {
@@ -62,20 +61,21 @@
 }
 
 .cardHeader {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  padding: 40px 30px;
+  background: #1a1a1a;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 220px;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .cardImg {
   width: 100%;
-  height: 180px;
-  object-fit: contain;
+  height: auto;
+  display: block;
+  object-fit: cover;
   filter: brightness(1.1);
   transition: transform 0.3s ease;
 }
@@ -270,12 +270,12 @@
   }
 
   .cardHeader {
-    min-height: 200px;
-    padding: 35px 25px;
+    padding: 0;
   }
 
   .cardImg {
-    height: 160px;
+    width: 100%;
+    height: auto;
   }
 
   .courseTitle {
@@ -303,12 +303,12 @@
   }
 
   .cardHeader {
-    min-height: 180px;
-    padding: 30px 20px;
+    padding: 0;
   }
 
   .cardImg {
-    height: 140px;
+    width: 100%;
+    height: auto;
   }
 
   .cardContent {
@@ -363,12 +363,12 @@
   }
 
   .cardHeader {
-    min-height: 170px;
-    padding: 25px 20px;
+    padding: 0;
   }
 
   .cardImg {
-    height: 130px;
+    width: 100%;
+    height: auto;
   }
 
   .cardContent {
@@ -451,12 +451,12 @@
   }
 
   .cardHeader {
-    min-height: 150px;
-    padding: 20px 15px;
+    padding: 0;
   }
 
   .cardImg {
-    height: 110px;
+    width: 100%;
+    height: auto;
   }
 
   .cardContent {
@@ -526,11 +526,12 @@
   }
 
   .cardHeader {
-    min-height: 140px;
+    padding: 0;
   }
 
   .cardImg {
-    height: 100px;
+    width: 100%;
+    height: auto;
   }
 
   .courseTitle {
