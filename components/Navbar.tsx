@@ -233,6 +233,7 @@ export default function Navbar() {
                 <div className={styles.profileDropdown}>
                   <h4>Profile</h4>
                   <div className={styles.profileOption}>
+                    <p onClick={() => router.push('/auth')}>Login / Sign Up</p>
                     <p>My Learning</p>
                     <p>Teach</p>
                     <p>Role: Student <span>(Switch to Instructor)</span></p>
