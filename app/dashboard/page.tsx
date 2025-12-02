@@ -66,6 +66,36 @@ export default function DashboardPage() {
     return () => clearInterval(refreshInterval);
   }, [router]);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch("https://srv746619.hstgr.cloud/api/v1/auth/user", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("User data from backend:", data);
+        
+        // Update user state with fresh data
+        const userData = data.data || data.user || data;
+        setUser(userData);
+        
+        // Update localStorage
+        if (userData) {
+          localStorage.setItem("userData", JSON.stringify(userData));
+        }
+      } else {
+        console.error("Failed to fetch user data:", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", {
@@ -106,6 +136,9 @@ export default function DashboardPage() {
             <Link href="/dashboard" className={styles.navLink}>Dashboard</Link>
             <Link href="/courses" className={styles.navLink}>Courses</Link>
             <Link href="/profile" className={styles.navLink}>Profile</Link>
+            <button onClick={fetchUserData} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}>
+              Refresh Data
+            </button>
             <button onClick={handleLogout} className={styles.logoutBtn}>
               Logout
             </button>
