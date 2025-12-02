@@ -58,7 +58,7 @@ export default function FeaturesSection() {
   return (
     <section className={styles.wrapper}>
 
-      <div className={styles.header}>
+      <div className={styles.header} data-aos="fade-up">
         <span className={styles.tagline}>Why students love us</span>
         <h2 className={styles.title}>Features </h2>
         <span> </span>
@@ -71,7 +71,7 @@ export default function FeaturesSection() {
 
       <div className={styles.timeline}></div>
 
-      <div className={`${styles.card} ${styles.cardLeft}`}>
+      <div className={`${styles.card} ${styles.cardLeft}`} data-aos="fade-right" data-aos-delay="100">
         <div className={styles.cardInner}>
           <div className={styles.iconBoxYellow}><BookOpen size={34} /></div>
           <div className={styles.textArea}>
@@ -89,7 +89,7 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      <div className={`${styles.card1} ${styles.cardRight}`}>
+      <div className={`${styles.card1} ${styles.cardRight}`} data-aos="fade-left" data-aos-delay="200">
         <div className={styles.cardInner}>
           <div className={styles.iconBoxGray}><Users size={34} /></div>
           <div className={styles.textArea}>
@@ -107,7 +107,7 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      <div className={`${styles.card} ${styles.cardLeft}`}>
+      <div className={`${styles.card} ${styles.cardLeft}`} data-aos="fade-right" data-aos-delay="300">
         <div className={styles.cardInner}>
           <div className={styles.iconBoxYellow}><Award size={34} /></div>
           <div className={styles.textArea}>
@@ -125,7 +125,7 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      <div className={`${styles.card1} ${styles.cardRight}`}>
+      <div className={`${styles.card1} ${styles.cardRight}`} data-aos="fade-left" data-aos-delay="200">
         <div className={styles.cardInner}>
           <div className={styles.iconBoxGray}><Users size={34} /></div>
           <div className={styles.textArea}>
@@ -143,7 +143,7 @@ export default function FeaturesSection() {
         </div>
       </div>
 
-      <div className={styles.statsWrapper} ref={statsRef}>
+      <div className={styles.statsWrapper} ref={statsRef} data-aos="fade-up">
         <h2 className={styles.statsTitle}>
           Why Thousands Choose <span className={styles.brand}>51skills</span>
         </h2>

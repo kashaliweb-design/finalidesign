@@ -64,17 +64,17 @@ export default function StudentStories() {
 
   return (
     <section className={styles.wrapper}>
-      <h2 className={styles.title}>
+      <h2 className={styles.title} data-aos="fade-up">
         <span>Student </span>
         <span className={styles.highlight}>Success Stories</span>
       </h2>
-      <p className={styles.subtitle}>
+      <p className={styles.subtitle} data-aos="fade-up" data-aos-delay="100">
         Hear from our community of learners who have transformed their careers
         through our platform.
       </p>
 
       <div className={styles.content}>
-        <div className={styles.leftCard}>
+        <div className={styles.leftCard} data-aos="fade-right" data-aos-delay="200">
           <div className={styles.quoteWrap}>
             <Image src="/assets/quote.png" width={30} height={30} alt="quote" />
           </div>
@@ -105,15 +105,16 @@ export default function StudentStories() {
           </div>
         </div>
 
-        <div className={styles.rightList}>
-            <div className={styles.more}>More Student Stories</div>
-          {reviews.map((review) => (
+        <div className={styles.rightList} data-aos="fade-left" data-aos-delay="300">
+          {reviews.map((review, index) => (
             <div
               key={review.id}
               className={`${styles.reviewItem} ${
                 active.id === review.id ? styles.activeReview : ""
               }`}
               onClick={() => setActive(review)}
+              data-aos="fade-up"
+              data-aos-delay={400 + (index * 100)}
             >
               <Image
                 src={review.img}

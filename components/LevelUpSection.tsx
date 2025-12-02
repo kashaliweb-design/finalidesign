@@ -36,21 +36,21 @@ export default function LevelUpSection() {
 
   return (
     <div className={styles.section}>
-      <h2 className={styles.title}>
+      <h2 className={styles.title} data-aos="fade-up">
         Ready to Level Up?
       </h2>
 
-      <p className={styles.subtitle}>
+      <p className={styles.subtitle} data-aos="fade-up" data-aos-delay="100">
         Join thousands of learners and unlock your potential with our expert-led
         courses, hands-on projects, and a vibrant community.
       </p>
 
-      <div className={styles.buttons}>
+      <div className={styles.buttons} data-aos="fade-up" data-aos-delay="200">
         <button className={styles.btnFilled}>Get Started</button>
         <button className={styles.btnOutline}>Browse Courses</button>
       </div>
 
-      <div className={styles.reviewCard}>
+      <div className={styles.reviewCard} data-aos="zoom-in" data-aos-delay="300">
         <Image
           src="/assets/quote.png"
           width={45}
@@ -81,7 +81,7 @@ export default function LevelUpSection() {
         <p className={styles.userRole}>{reviews[active].role}</p>
       </div>
 
-      <div className={styles.features}>
+      <div className={styles.features} data-aos="fade-up" data-aos-delay="400">
         <div className={styles.featureItem}>
           ⭐ 30-day money-back guarantee
         </div>

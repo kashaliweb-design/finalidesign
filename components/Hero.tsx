@@ -18,12 +18,12 @@ export default function Hero() {
 
   return (
     <section className={styles.heroSection}>
-      <div className={styles.left}>
-        <h1 className={styles.title}>
+      <div className={styles.left} data-aos="fade-right">
+        <h1 className={styles.title} data-aos="fade-up" data-aos-delay="200">
           Unlock Your <span>Potential</span> with <br /> 51skills
         </h1>
 
-        <p className={styles.subtitle}>
+        <p className={styles.subtitle} data-aos="fade-up" data-aos-delay="400">
 
           <span>D</span><span>i</span><span>s</span><span>c</span><span>o</span><span>v</span><span>e</span><span>r</span><span> </span>
           <span>a</span><span> </span>
@@ -44,13 +44,13 @@ export default function Hero() {
           <span>t</span><span>o</span><span>d</span><span>a</span><span>y</span><span>!</span>
         </p>
 
-        <div className={styles.buttons}>
+        <div className={styles.buttons} data-aos="fade-up" data-aos-delay="600">
           <button className={styles.getStarted}>Get Started ➜</button>
           <button className={styles.browse}>Browse Courses ➜</button>
         </div>
       </div>
 
-      <div className={styles.right}>
+      <div className={styles.right} data-aos="fade-left" data-aos-delay="300">
 
         <div className={styles.fadeLeft}></div>
         <div className={styles.fadeRight}></div>

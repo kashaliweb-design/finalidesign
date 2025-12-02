@@ -5,14 +5,20 @@ import { courses } from "@/data/courses";
 export default function Courses() {
   return (
     <div className={styles.wrapper} id="courses">
-      <h2 className={styles.sectionTitle}>
+      <h2 className={styles.sectionTitle} data-aos="fade-up">
         <span className={styles.titleAll}>All</span>
         <span className={styles.titleCourses}> Courses</span>
       </h2>
 
       <div className={styles.grid}>
-        {courses.map((course) => (
-          <Link href={`/courses/${course.slug}`} className={styles.card} key={course.id}>
+        {courses.map((course, index) => (
+          <Link 
+            href={`/courses/${course.slug}`} 
+            className={styles.card} 
+            key={course.id}
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
+          >
             {course.badges && course.badges.length > 0 && (
               <div className={styles.badge}>{course.badges[0]}</div>
             )}
