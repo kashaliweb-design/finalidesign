@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./auth.module.css";
 
 export default function AuthPage() {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -20,6 +22,11 @@ export default function AuthPage() {
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [verificationEmail, setVerificationEmail] = useState("");
+  const [resendingOtp, setResendingOtp] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,6 +55,7 @@ export default function AuthPage() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include", // Important: This allows cookies to be sent and received
           body: JSON.stringify({
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -63,27 +71,21 @@ export default function AuthPage() {
           throw new Error(data.message || "Signup failed");
         }
 
-        setSuccess("Account created successfully! Please sign in.");
-        // Switch to login form after successful signup
+        setSuccess("Account created successfully! Please check your email for verification code.");
+        setVerificationEmail(formData.email);
+        // Show verification form after successful signup
         setTimeout(() => {
-          setIsLogin(true);
-          setFormData({
-            firstName: "",
-            lastName: "",
-            userName: "",
-            email: formData.email,
-            password: "",
-            confirmPassword: "",
-          });
+          setShowVerification(true);
           setSuccess("");
         }, 2000);
       } else {
-        // Login API call
+        // Login API call with credentials to receive cookies
         const response = await fetch("/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include", // Important: This allows cookies to be sent and received
           body: JSON.stringify({
             email: formData.email,
             password: formData.password,
@@ -91,20 +93,27 @@ export default function AuthPage() {
         });
 
         const data = await response.json();
+        console.log("Login response data:", data); // Debug log
 
         if (!response.ok) {
           throw new Error(data.message || "Login failed");
         }
 
-        // Store token if provided
-        if (data.token) {
-          localStorage.setItem("authToken", data.token);
+        // Store user data in localStorage (token will be in httpOnly cookie)
+        const userData = data.user || data.userData || data;
+        if (userData && (userData.firstName || userData.email)) {
+          localStorage.setItem("userData", JSON.stringify(userData));
+          console.log("User data stored:", userData); // Debug log
         }
 
+        // Log cookies for debugging
+        console.log("Cookies after login:", document.cookie);
+
         setSuccess("Login successful! Redirecting...");
-        // Redirect to dashboard or home page
+        
+        // Redirect to home page
         setTimeout(() => {
-          window.location.href = "/";
+          router.push("/");
         }, 1500);
       }
     } catch (err: any) {
@@ -119,6 +128,106 @@ export default function AuthPage() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleVerifyEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!otp || otp.length < 4) {
+      setError("Please enter a valid OTP");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/verify-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: verificationEmail,
+          otp: otp,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Email verification failed");
+      }
+
+      setSuccess("Email verified successfully! Please sign in.");
+      
+      // Switch to login form after successful verification
+      setTimeout(() => {
+        setShowVerification(false);
+        setIsLogin(true);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          userName: "",
+          email: verificationEmail,
+          password: "",
+          confirmPassword: "",
+        });
+        setOtp("");
+        setSuccess("");
+      }, 2000);
+    } catch (err: any) {
+      setError(err.message || "Verification failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (resendCooldown > 0) return;
+
+    setError("");
+    setSuccess("");
+    setResendingOtp(true);
+
+    try {
+      const response = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: verificationEmail,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to resend OTP");
+      }
+
+      setSuccess("OTP resent successfully! Please check your email.");
+      
+      // Set cooldown timer (60 seconds)
+      setResendCooldown(60);
+      const interval = setInterval(() => {
+        setResendCooldown((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err: any) {
+      setError(err.message || "Failed to resend OTP. Please try again.");
+    } finally {
+      setResendingOtp(false);
+    }
   };
 
   return (
@@ -156,11 +265,17 @@ export default function AuthPage() {
             </div>
 
             <div className={styles.formHeader}>
-              <h2>{isLogin ? "Welcome Back!" : "Create Account"}</h2>
+              <h2>
+                {showVerification 
+                  ? "Verify Your Email" 
+                  : (isLogin ? "Welcome Back!" : "Create Account")}
+              </h2>
               <p>
-                {isLogin
-                  ? "Enter your credentials to access your account"
-                  : "Sign up to start your learning journey"}
+                {showVerification
+                  ? `Enter the verification code sent to ${verificationEmail}`
+                  : (isLogin
+                    ? "Enter your credentials to access your account"
+                    : "Sign up to start your learning journey")}
               </p>
             </div>
 
@@ -176,7 +291,64 @@ export default function AuthPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className={styles.form}>
+            {showVerification ? (
+              <form onSubmit={handleVerifyEmail} className={styles.form}>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="otp">
+                    Verification Code <span className={styles.required}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter 6-digit code"
+                    maxLength={6}
+                    required
+                  />
+                </div>
+
+                <button type="submit" className={styles.submitButton} disabled={loading}>
+                  {loading ? "Verifying..." : "Verify Email"}
+                </button>
+
+                <div className={styles.toggleAuth}>
+                  <p>
+                    Didn't receive the code?{" "}
+                    <button
+                      type="button"
+                      onClick={handleResendOtp}
+                      className={styles.toggleButton}
+                      disabled={resendingOtp || resendCooldown > 0}
+                    >
+                      {resendingOtp 
+                        ? "Sending..." 
+                        : resendCooldown > 0 
+                        ? `Resend in ${resendCooldown}s` 
+                        : "Resend OTP"}
+                    </button>
+                  </p>
+                </div>
+                
+                <div className={styles.toggleAuth} style={{ marginTop: "0.5rem" }}>
+                  <p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowVerification(false);
+                        setIsLogin(false);
+                        setResendCooldown(0);
+                      }}
+                      className={styles.toggleButton}
+                    >
+                      Back to Signup
+                    </button>
+                  </p>
+                </div>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmit} className={styles.form}>
               {!isLogin && (
                 <>
                   <div className={styles.inputGroup}>
@@ -338,6 +510,7 @@ export default function AuthPage() {
                 </p>
               </div>
             </form>
+            )}
           </div>
         </div>
       </div>

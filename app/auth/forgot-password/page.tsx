@@ -8,12 +8,38 @@ import styles from "../auth.module.css";
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send a request to your backend to send a reset email
-    // For now, we'll just show the success message
-    setIsSubmitted(true);
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to send reset email");
+      }
+
+      setSuccess(data.message || "Password reset email sent successfully!");
+      setIsSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,6 +77,18 @@ export default function ForgotPasswordPage() {
                   </p>
                 </div>
 
+                {error && (
+                  <div className={styles.errorMessage}>
+                    {error}
+                  </div>
+                )}
+                
+                {success && !isSubmitted && (
+                  <div className={styles.successMessage}>
+                    {success}
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className={styles.form}>
                   <div className={styles.inputGroup}>
                     <label htmlFor="email">Email Address</label>
@@ -65,8 +103,8 @@ export default function ForgotPasswordPage() {
                     />
                   </div>
 
-                  <button type="submit" className={styles.submitButton}>
-                    Send Reset Link
+                  <button type="submit" className={styles.submitButton} disabled={loading}>
+                    {loading ? "Sending..." : "Send Reset Link"}
                   </button>
                   
                   <div className={styles.toggleAuth}>
@@ -84,15 +122,20 @@ export default function ForgotPasswordPage() {
                 <div className={styles.successIcon}>✓</div>
                 <h2>Email Sent!</h2>
                 <p>
-                  We've sent a password reset link to <strong>{email}</strong>. 
-                  Please check your inbox and follow the instructions to reset your password.
+                  We've sent a verification code to <strong>{email}</strong>. 
+                  Please check your inbox and use the code to reset your password.
                 </p>
                 <p className={styles.checkSpam}>
                   If you don't see the email, please check your spam folder.
                 </p>
-                <Link href="/auth" className={styles.backToLoginBtn}>
-                  Back to Login
+                <Link href={`/auth/reset-password?email=${encodeURIComponent(email)}`} className={styles.backToLoginBtn}>
+                  Reset Password Now
                 </Link>
+                <div style={{ marginTop: "1rem" }}>
+                  <Link href="/auth" className={styles.toggleButton}>
+                    Back to Login
+                  </Link>
+                </div>
               </div>
             )}
           </div>
