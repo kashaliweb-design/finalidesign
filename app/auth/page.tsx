@@ -99,21 +99,19 @@ export default function AuthPage() {
           throw new Error(data.message || "Login failed");
         }
 
-        // Store user data in localStorage (token will be in httpOnly cookie)
-        const userData = data.user || data.userData || data;
+        // Store user data in localStorage (tokens are in httpOnly cookies)
+        // Backend returns data in data.data field
+        const userData = data.data || data.user || data.userData || data;
         if (userData && (userData.firstName || userData.email)) {
           localStorage.setItem("userData", JSON.stringify(userData));
           console.log("User data stored:", userData); // Debug log
         }
 
-        // Log cookies for debugging
-        console.log("Cookies after login:", document.cookie);
-
-        setSuccess("Login successful! Redirecting...");
+        setSuccess("Login successful! Redirecting to dashboard...");
         
-        // Redirect to home page
+        // Redirect to dashboard
         setTimeout(() => {
-          router.push("/");
+          router.push("/dashboard");
         }, 1500);
       }
     } catch (err: any) {

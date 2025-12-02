@@ -13,6 +13,16 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        // First check localStorage for user data
+        const storedUserData = localStorage.getItem("userData");
+        if (storedUserData) {
+          const userData = JSON.parse(storedUserData);
+          setUser(userData);
+          setLoading(false);
+          return;
+        }
+
+        // If no localStorage data, try to verify with backend
         const response = await fetch("/api/auth/verify", {
           method: "GET",
           credentials: "include",
@@ -24,8 +34,15 @@ export default function DashboardPage() {
         }
 
         const data = await response.json();
-        setUser(data.user);
+        const user = data.user || data.data;
+        setUser(user);
+        
+        // Store user data in localStorage for future use
+        if (user) {
+          localStorage.setItem("userData", JSON.stringify(user));
+        }
       } catch (error) {
+        console.error("Auth check failed:", error);
         router.push("/auth");
       } finally {
         setLoading(false);
