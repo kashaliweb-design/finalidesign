@@ -68,13 +68,15 @@ export default function DashboardPage() {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("https://srv746619.hstgr.cloud/api/v1/auth/user", {
+      console.log("Fetching user data...");
+      console.log("Current cookies:", document.cookie);
+      
+      const response = await fetch("/api/auth/user", {
         method: "GET",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
+
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         const data = await response.json();
@@ -89,10 +91,13 @@ export default function DashboardPage() {
           localStorage.setItem("userData", JSON.stringify(userData));
         }
       } else {
-        console.error("Failed to fetch user data:", response.status);
+        const errorData = await response.json();
+        console.error("Failed to fetch user data:", response.status, errorData);
+        alert(`Error: ${errorData.message || 'Failed to fetch user data'}`);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
+      alert(`Error: ${error}`);
     }
   };
 

@@ -31,10 +31,22 @@ export async function POST(request: NextRequest) {
     console.log('Backend Set-Cookie headers:', setCookieHeaders); // Debug log
     
     if (setCookieHeaders && setCookieHeaders.length > 0) {
-      // Forward all cookies from backend
+      // Forward all cookies from backend, but modify for localhost
       setCookieHeaders.forEach(cookie => {
-        nextResponse.headers.append('Set-Cookie', cookie);
+        console.log('Original cookie:', cookie);
+        // For localhost, remove Secure and change SameSite to Lax
+        let modifiedCookie = cookie;
+        if (process.env.NODE_ENV !== 'production') {
+          modifiedCookie = cookie
+            .replace(/; Secure/gi, '')
+            .replace(/SameSite=None/gi, 'SameSite=Lax');
+        }
+        console.log('Modified cookie:', modifiedCookie);
+        nextResponse.headers.append('Set-Cookie', modifiedCookie);
       });
+      console.log('Total cookies forwarded:', setCookieHeaders.length);
+    } else {
+      console.log('No Set-Cookie headers received from backend');
     }
 
     // If backend sends token in response body instead of cookie, set it as cookie
