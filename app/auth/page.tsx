@@ -27,6 +27,8 @@ export default function AuthPage() {
   const [verificationEmail, setVerificationEmail] = useState("");
   const [resendingOtp, setResendingOtp] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [refreshingData, setRefreshingData] = useState(false);
+  const [refreshMessage, setRefreshMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -228,6 +230,36 @@ export default function AuthPage() {
     }
   };
 
+  const handleRefreshData = async () => {
+    setRefreshMessage("");
+    setRefreshingData(true);
+
+    try {
+      const response = await fetch("https://srv746619.hstgr.cloud/api/v1/auth/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to refresh data");
+      }
+
+      setRefreshMessage("Data refreshed successfully!");
+      console.log("Refreshed user data:", data);
+      
+      setTimeout(() => setRefreshMessage(""), 3000);
+    } catch (err: any) {
+      setRefreshMessage(err.message || "Failed to refresh data. Please try again.");
+    } finally {
+      setRefreshingData(false);
+    }
+  };
+
   return (
     <div className={styles.authContainer}>
       
@@ -286,6 +318,12 @@ export default function AuthPage() {
             {success && (
               <div className={styles.successMessage}>
                 {success}
+              </div>
+            )}
+
+            {refreshMessage && (
+              <div className={refreshMessage.includes("successfully") ? styles.successMessage : styles.errorMessage}>
+                {refreshMessage}
               </div>
             )}
 
@@ -494,6 +532,39 @@ export default function AuthPage() {
               <button type="submit" className={styles.submitButton} disabled={loading}>
                 {loading ? "Processing..." : (isLogin ? "Sign In" : "Sign Up")}
               </button>
+
+              {isLogin && (
+                <button 
+                  type="button" 
+                  onClick={handleRefreshData} 
+                  className={styles.refreshButton}
+                  disabled={refreshingData}
+                  style={{
+                    marginTop: "0.75rem",
+                    width: "100%",
+                    padding: "0.875rem",
+                    backgroundColor: "#10b981",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "0.5rem",
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    cursor: refreshingData ? "not-allowed" : "pointer",
+                    opacity: refreshingData ? 0.6 : 1,
+                    transition: "all 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!refreshingData) {
+                      e.currentTarget.style.backgroundColor = "#059669";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "#10b981";
+                  }}
+                >
+                  {refreshingData ? "Refreshing..." : "Refresh Data"}
+                </button>
+              )}
               
               <div className={styles.toggleAuth}>
                 <p>
