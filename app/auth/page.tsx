@@ -73,6 +73,12 @@ export default function AuthPage() {
           throw new Error(data.message || "Signup failed");
         }
 
+        // Store user data for onboarding
+        const userData = data.data || data.user || data.userData || data;
+        if (userData && (userData.firstName || userData.email)) {
+          localStorage.setItem("userData", JSON.stringify(userData));
+        }
+        
         setSuccess("Account created successfully! Please check your email for verification code.");
         setVerificationEmail(formData.email);
         // Show verification form after successful signup
@@ -160,22 +166,11 @@ export default function AuthPage() {
         throw new Error(data.message || "Email verification failed");
       }
 
-      setSuccess("Email verified successfully! Please sign in.");
+      setSuccess("Email verified successfully! Redirecting to onboarding...");
       
-      // Switch to login form after successful verification
+      // Redirect to onboarding after successful verification
       setTimeout(() => {
-        setShowVerification(false);
-        setIsLogin(true);
-        setFormData({
-          firstName: "",
-          lastName: "",
-          userName: "",
-          email: verificationEmail,
-          password: "",
-          confirmPassword: "",
-        });
-        setOtp("");
-        setSuccess("");
+        router.push("/onboarding");
       }, 2000);
     } catch (err: any) {
       setError(err.message || "Verification failed. Please try again.");
@@ -266,7 +261,17 @@ export default function AuthPage() {
       <div className={styles.authContent}>
         {/* Left Info Box */}
         <div className={styles.infoBox}>
-          <h2>Enhance Your Skills with Our Courses</h2>
+          <div className={styles.svgContainer}>
+            <Image
+              src={isLogin ? "/undraw_secure-login_m11a (1).svg" : "/undraw_authentication_1evl (1).svg"}
+              alt={isLogin ? "Secure Login" : "Authentication"}
+              width={400}
+              height={300}
+              className={styles.loginSvg}
+              priority
+            />
+          </div>
+          <h2>{isLogin ? "Welcome Back!" : "Join 51Skills Today"}</h2>
           <p>We offer a wide range of professional courses to help you advance in your career:</p>
           <ul className={styles.coursesList}>
             <li>Web Development</li>

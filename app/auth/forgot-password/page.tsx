@@ -48,6 +48,16 @@ export default function ForgotPasswordPage() {
       <div className={styles.authContent}>
         {/* Left Info Box */}
         <div className={styles.infoBox}>
+          <div className={styles.svgContainer}>
+            <Image
+              src="/undraw_forgot-password_nttj (1).svg"
+              alt="Forgot Password"
+              width={400}
+              height={300}
+              className={styles.loginSvg}
+              priority
+            />
+          </div>
           <h2>Reset Your Password</h2>
           <p>Follow these simple steps to reset your password:</p>
           <ul className={styles.coursesList}>

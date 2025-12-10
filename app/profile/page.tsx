@@ -55,10 +55,30 @@ export default function ProfilePage() {
     });
   };
 
-  const handleSave = () => {
-    // TODO: Implement profile update API call
-    setEditing(false);
-    alert("Profile updated successfully!");
+  const handleSave = async () => {
+    try {
+      const response = await fetch("/api/user/update-user", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.message || "Failed to update profile");
+        return;
+      }
+
+      const data = await response.json();
+      setUser(data.user);
+      setEditing(false);
+      alert("Profile updated successfully!");
+    } catch (error) {
+      alert("Failed to update profile. Please try again.");
+    }
   };
 
   if (loading) {
@@ -181,13 +201,13 @@ export default function ProfilePage() {
                     </div>
                   </Link>
 
-                  <div className={styles.settingLink}>
-                    <span className={styles.linkIcon}>🔔</span>
+                  <Link href="/profile/interests" className={styles.settingLink}>
+                    <span className={styles.linkIcon}>⭐</span>
                     <div>
-                      <h4>Notifications</h4>
-                      <p>Manage notification preferences</p>
+                      <h4>My Interests</h4>
+                      <p>Manage your learning interests</p>
                     </div>
-                  </div>
+                  </Link>
 
                   <Link href="/select-role" className={styles.settingLink}>
                     <span className={styles.linkIcon}>👤</span>
@@ -197,13 +217,29 @@ export default function ProfilePage() {
                     </div>
                   </Link>
 
-                  <div className={styles.settingLink}>
+                  <Link href="/courses" className={styles.settingLink}>
                     <span className={styles.linkIcon}>🎓</span>
                     <div>
                       <h4>My Courses</h4>
                       <p>View enrolled courses</p>
                     </div>
-                  </div>
+                  </Link>
+
+                  <Link href="/profile/referral" className={styles.settingLink}>
+                    <span className={styles.linkIcon}>📢</span>
+                    <div>
+                      <h4>Referral Source</h4>
+                      <p>Tell us how you found us</p>
+                    </div>
+                  </Link>
+
+                  <Link href="/profile/bug-report" className={styles.settingLink}>
+                    <span className={styles.linkIcon}>🐛</span>
+                    <div>
+                      <h4>Report a Bug</h4>
+                      <p>Help us improve the platform</p>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
