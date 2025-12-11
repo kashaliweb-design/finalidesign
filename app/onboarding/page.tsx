@@ -51,6 +51,14 @@ export default function OnboardingPage() {
 
   const checkAuth = async () => {
     try {
+      // Check if onboarding is already completed
+      const onboardingCompleted = localStorage.getItem("onboardingCompleted");
+      if (onboardingCompleted === "true") {
+        // User has already completed onboarding, redirect to dashboard
+        router.push("/dashboard");
+        return;
+      }
+
       // Get user data from localStorage or API
       const userData = localStorage.getItem("userData");
       if (userData) {
@@ -113,11 +121,16 @@ export default function OnboardingPage() {
           });
         }
         
+        // Mark onboarding as completed
+        localStorage.setItem("onboardingCompleted", "true");
+        
         // Redirect to dashboard
         router.push("/dashboard");
       } catch (error) {
         console.error("Failed to save interests:", error);
         alert("Failed to save interests. Redirecting to dashboard...");
+        // Mark onboarding as completed even if there's an error
+        localStorage.setItem("onboardingCompleted", "true");
         router.push("/dashboard");
       } finally {
         setSubmitting(false);
@@ -126,6 +139,8 @@ export default function OnboardingPage() {
   };
 
   const handleSkip = () => {
+    // Mark onboarding as completed when skipped
+    localStorage.setItem("onboardingCompleted", "true");
     router.push("/dashboard");
   };
 

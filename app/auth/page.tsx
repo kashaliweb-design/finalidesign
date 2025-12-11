@@ -115,11 +115,11 @@ export default function AuthPage() {
           console.log("User data stored:", userData); // Debug log
         }
 
-        setSuccess("Login successful! Redirecting to dashboard...");
+        setSuccess("Login successful! Redirecting to onboarding...");
         
-        // Redirect to dashboard
+        // Redirect to onboarding
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push("/onboarding");
         }, 1500);
       }
     } catch (err: any) {
