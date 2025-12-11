@@ -81,6 +81,8 @@ export default function OnboardingPage() {
   };
 
   const handleNext = async () => {
+    console.log("handleNext called, currentStep:", currentStep);
+    
     if (currentStep === 0) {
       // Step 1: Save referral source
       if (!selectedSource) {
@@ -109,9 +111,11 @@ export default function OnboardingPage() {
       
       setSubmitting(true);
       try {
+        console.log("Saving interests:", selectedInterests);
+        
         // Save each interest
         for (const interest of selectedInterests) {
-          await fetch("/api/user/create-user-interest", {
+          const response = await fetch("/api/user/create-user-interest", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -119,16 +123,23 @@ export default function OnboardingPage() {
               name: skillsInterests.find(s => s.id === interest)?.name || interest 
             }),
           });
+          
+          if (!response.ok) {
+            console.error("Failed to save interest:", interest, await response.text());
+          }
         }
+        
+        console.log("All interests saved, marking onboarding complete");
         
         // Mark onboarding as completed
         localStorage.setItem("onboardingCompleted", "true");
+        
+        console.log("Redirecting to dashboard...");
         
         // Redirect to dashboard
         router.push("/dashboard");
       } catch (error) {
         console.error("Failed to save interests:", error);
-        alert("Failed to save interests. Redirecting to dashboard...");
         // Mark onboarding as completed even if there's an error
         localStorage.setItem("onboardingCompleted", "true");
         router.push("/dashboard");
