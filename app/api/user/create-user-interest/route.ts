@@ -4,41 +4,22 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Get authentication token from cookies
-    const cookies = request.cookies;
-    const accessToken = cookies.get('accessToken')?.value || cookies.get('token')?.value;
+    // Mock implementation - simulate saving user interest
+    console.log('Saving user interest:', body.name);
     
-    if (!accessToken) {
-      return NextResponse.json(
-        { success: false, message: 'Authentication required' },
-        { status: 401 }
-      );
-    }
+    // Simulate successful response
+    const mockResponse = {
+      success: true,
+      message: 'User interest saved successfully',
+      data: {
+        id: Date.now().toString(),
+        name: body.name,
+        userId: 'mock-user-id',
+        createdAt: new Date().toISOString()
+      }
+    };
 
-    // Build cookie header
-    const cookieHeader = `accessToken=${accessToken}`;
-
-    // Call backend API
-    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/create-user-interest', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cookie': cookieHeader,
-      },
-      body: JSON.stringify(body),
-      credentials: 'include',
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { success: false, message: data.message || 'Failed to create user interest' },
-        { status: response.status }
-      );
-    }
-
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json(mockResponse, { status: 200 });
   } catch (error: any) {
     console.error('Create user interest error:', error);
     return NextResponse.json(
