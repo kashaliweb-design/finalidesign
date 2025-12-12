@@ -8,9 +8,18 @@ export async function POST(request: NextRequest) {
     const cookies = request.cookies;
     const accessToken = cookies.get('accessToken')?.value || cookies.get('token')?.value;
     
+    // Debug: Log all cookies
+    const allCookies: any = {};
+    cookies.getAll().forEach(cookie => {
+      allCookies[cookie.name] = cookie.value.substring(0, 20) + '...';
+    });
+    console.log('Referral Source - All cookies:', allCookies);
+    console.log('Referral Source - Access token:', accessToken ? 'Found (length: ' + accessToken.length + ')' : 'NOT FOUND');
+    
     if (!accessToken) {
+      console.error('Referral Source - No authentication token found in cookies');
       return NextResponse.json(
-        { success: false, message: 'Unauthorized' },
+        { success: false, message: 'Unauthorized - No authentication token found' },
         { status: 401 }
       );
     }

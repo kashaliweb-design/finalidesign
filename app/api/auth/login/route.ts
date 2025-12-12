@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
     });
 
     const data = await response.json();
-    console.log('Backend response:', data); // Debug log
+    console.log('Backend login response:', JSON.stringify(data, null, 2)); // Debug log
+    console.log('Backend response status:', response.status);
 
     if (!response.ok) {
       return NextResponse.json(
@@ -28,6 +29,7 @@ export async function POST(request: NextRequest) {
 
     // Check if backend sent cookies in Set-Cookie header
     const setCookieHeaders = response.headers.getSetCookie();
+    console.log('Backend Set-Cookie headers count:', setCookieHeaders?.length || 0);
     console.log('Backend Set-Cookie headers:', setCookieHeaders); // Debug log
     
     if (setCookieHeaders && setCookieHeaders.length > 0) {
@@ -50,9 +52,20 @@ export async function POST(request: NextRequest) {
     }
 
     // If backend sends token in response body instead of cookie, set it as cookie
-    const token = data.token || data.accessToken || data.authToken;
+    // Check multiple possible locations for the token
+    const token = data.token || data.accessToken || data.authToken || 
+                  (data.data && (data.data.token || data.data.accessToken)) ||
+                  (data.tokens && data.tokens.accessToken);
+    
+    console.log('Token extraction attempt:');
+    console.log('  - data.token:', data.token ? 'Found' : 'Not found');
+    console.log('  - data.accessToken:', data.accessToken ? 'Found' : 'Not found');
+    console.log('  - data.data.token:', data.data?.token ? 'Found' : 'Not found');
+    console.log('  - data.data.accessToken:', data.data?.accessToken ? 'Found' : 'Not found');
+    console.log('  - Final token:', token ? 'FOUND (length: ' + token.length + ')' : 'NOT FOUND');
+    
     if (token) {
-      console.log('Token found in response body, setting as cookie:', token); // Debug log
+      console.log('Setting token as cookie (first 20 chars):', token.substring(0, 20) + '...'); // Debug log
       
       // Set token as HTTP-only cookie (both names for compatibility)
       const cookieOptions = {
