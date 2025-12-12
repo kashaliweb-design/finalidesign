@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const cookieHeader = `accessToken=${accessToken}`;
 
     // Call backend API
-    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/create-user-bug-report', {
+    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-bug-report', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

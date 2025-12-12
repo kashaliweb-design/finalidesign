@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     console.log('Saving referral source:', body.source);
 
     // Call backend API
-    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/create-user-referral-source', {
+    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-referral-source', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
