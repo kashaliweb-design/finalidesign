@@ -154,6 +154,7 @@ export default function AuthPage() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // Important: This allows cookies to be sent and received
         body: JSON.stringify({
           email: verificationEmail,
           otp: otp,
@@ -192,6 +193,7 @@ export default function AuthPage() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email: verificationEmail,
         }),
