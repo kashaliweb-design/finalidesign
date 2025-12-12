@@ -31,10 +31,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json(
+    // Create response with data
+    const nextResponse = NextResponse.json(
       { success: true, message: data.message || 'Email verified successfully', data },
       { status: 200 }
     );
+
+    // Check if backend sent cookies in Set-Cookie header
+    const setCookieHeaders = response.headers.getSetCookie();
+    
+    if (setCookieHeaders && setCookieHeaders.length > 0) {
+      // Forward all cookies from backend, but modify for localhost
+      setCookieHeaders.forEach(cookie => {
+        let modifiedCookie = cookie;
+        if (process.env.NODE_ENV !== 'production') {
+          modifiedCookie = cookie
+            .replace(/; Secure/gi, '')
+            .replace(/SameSite=None/gi, 'SameSite=Lax');
+        }
+        nextResponse.headers.append('Set-Cookie', modifiedCookie);
+      });
+    }
+
+    // If backend sends token in response body instead of cookie, set it as cookie
+    const token = data.token || data.accessToken || data.authToken;
+    if (token) {
+      // Set token as HTTP-only cookie (both names for compatibility)
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax' as const,
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+      };
+      
+      nextResponse.cookies.set('token', token, cookieOptions);
+      nextResponse.cookies.set('accessToken', token, cookieOptions);
+    }
+
+    return nextResponse;
   } catch (error: any) {
     console.error('Email verification error:', error);
     return NextResponse.json(

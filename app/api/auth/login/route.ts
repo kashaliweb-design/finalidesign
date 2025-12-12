@@ -54,14 +54,17 @@ export async function POST(request: NextRequest) {
     if (token) {
       console.log('Token found in response body, setting as cookie:', token); // Debug log
       
-      // Set token as HTTP-only cookie
-      nextResponse.cookies.set('token', token, {
+      // Set token as HTTP-only cookie (both names for compatibility)
+      const cookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        sameSite: 'lax' as const,
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: '/',
-      });
+      };
+      
+      nextResponse.cookies.set('token', token, cookieOptions);
+      nextResponse.cookies.set('accessToken', token, cookieOptions);
     }
 
     return nextResponse;
