@@ -91,9 +91,15 @@ export default function OnboardingPage() {
       }
       
       try {
+        const authToken = localStorage.getItem("authToken");
+        const headers: HeadersInit = { "Content-Type": "application/json" };
+        if (authToken) {
+          headers["Authorization"] = `Bearer ${authToken}`;
+        }
+        
         await fetch("/api/user/create-user-referral-source", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           credentials: "include",
           body: JSON.stringify({ source: selectedSource }),
         });
@@ -114,10 +120,16 @@ export default function OnboardingPage() {
         console.log("Saving interests:", selectedInterests);
         
         // Save each interest
+        const authToken = localStorage.getItem("authToken");
+        const headers: HeadersInit = { "Content-Type": "application/json" };
+        if (authToken) {
+          headers["Authorization"] = `Bearer ${authToken}`;
+        }
+        
         for (const interest of selectedInterests) {
           const response = await fetch("/api/user/create-user-interest", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers,
             credentials: "include",
             body: JSON.stringify({ 
               name: skillsInterests.find(s => s.id === interest)?.name || interest 

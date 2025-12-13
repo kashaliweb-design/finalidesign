@@ -24,8 +24,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create response with data
-    const nextResponse = NextResponse.json(data, { status: 200 });
+    // Extract token for response body
+    const token = data.token || data.accessToken || data.authToken || 
+                  (data.data && (data.data.token || data.data.accessToken)) ||
+                  (data.tokens && data.tokens.accessToken);
+    
+    // Create response with data, ensuring token is in response body
+    const responseData = {
+      ...data,
+      token: token, // Ensure token is available in response body
+      accessToken: token
+    };
+    
+    const nextResponse = NextResponse.json(responseData, { status: 200 });
 
     // Check if backend sent cookies in Set-Cookie header
     const setCookieHeaders = response.headers.getSetCookie();
@@ -51,12 +62,7 @@ export async function POST(request: NextRequest) {
       console.log('No Set-Cookie headers received from backend');
     }
 
-    // If backend sends token in response body instead of cookie, set it as cookie
-    // Check multiple possible locations for the token
-    const token = data.token || data.accessToken || data.authToken || 
-                  (data.data && (data.data.token || data.data.accessToken)) ||
-                  (data.tokens && data.tokens.accessToken);
-    
+    // Set token as cookie if available
     console.log('Token extraction attempt:');
     console.log('  - data.token:', data.token ? 'Found' : 'Not found');
     console.log('  - data.accessToken:', data.accessToken ? 'Found' : 'Not found');

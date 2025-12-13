@@ -107,12 +107,19 @@ export default function AuthPage() {
           throw new Error(data.message || "Login failed");
         }
 
-        // Store user data in localStorage (tokens are in httpOnly cookies)
+        // Store user data and token in localStorage
         // Backend returns data in data.data field
         const userData = data.data || data.user || data.userData || data;
         if (userData && (userData.firstName || userData.email)) {
           localStorage.setItem("userData", JSON.stringify(userData));
           console.log("User data stored:", userData); // Debug log
+        }
+        
+        // Store token for API requests
+        const authToken = data.token || data.accessToken;
+        if (authToken) {
+          localStorage.setItem("authToken", authToken);
+          console.log("Auth token stored"); // Debug log
         }
 
         setSuccess("Login successful! Redirecting to onboarding...");

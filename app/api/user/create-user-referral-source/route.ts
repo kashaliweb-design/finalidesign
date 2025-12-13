@@ -4,9 +4,17 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Get authentication token from cookies
+    // Get authentication token from cookies or Authorization header
     const cookies = request.cookies;
-    const accessToken = cookies.get('accessToken')?.value || cookies.get('token')?.value;
+    let accessToken = cookies.get('accessToken')?.value || cookies.get('token')?.value;
+    
+    // Fallback to Authorization header if no cookie
+    if (!accessToken) {
+      const authHeader = request.headers.get('Authorization');
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        accessToken = authHeader.substring(7);
+      }
+    }
     
     // Debug: Log all cookies
     const allCookies: any = {};
@@ -14,10 +22,11 @@ export async function POST(request: NextRequest) {
       allCookies[cookie.name] = cookie.value.substring(0, 20) + '...';
     });
     console.log('Referral Source - All cookies:', allCookies);
+    console.log('Referral Source - Authorization header:', request.headers.get('Authorization') ? 'Present' : 'Not present');
     console.log('Referral Source - Access token:', accessToken ? 'Found (length: ' + accessToken.length + ')' : 'NOT FOUND');
     
     if (!accessToken) {
-      console.error('Referral Source - No authentication token found in cookies');
+      console.error('Referral Source - No authentication token found in cookies or Authorization header');
       return NextResponse.json(
         { success: false, message: 'Unauthorized - No authentication token found' },
         { status: 401 }
