@@ -1,0 +1,60 @@
+﻿import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    const cookies = request.cookies;
+    let accessToken = cookies.get('accessToken')?.value || cookies.get('token')?.value;
+    
+    if (!accessToken) {
+      const authHeader = request.headers.get('Authorization');
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        accessToken = authHeader.substring(7);
+      }
+    }
+    
+    console.log('Referral Source - Access token:', accessToken ? 'Found (length: ' + accessToken.length + ')' : 'NOT FOUND');
+    console.log('Referral Source - Request body:', body);
+    
+    if (!accessToken) {
+      console.error('Referral Source - No authentication token found');
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized - No authentication token found' },
+        { status: 401 }
+      );
+    }
+
+    console.log('Calling external API with referral source:', body.source);
+
+    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-referral-source', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': Bearer ,
+      },
+      body: JSON.stringify(body),
+    });
+
+    console.log('External API response status:', response.status);
+
+    const data = await response.json();
+    console.log('External API response data:', data);
+
+    if (!response.ok) {
+      console.error('External API error:', data);
+      return NextResponse.json(
+        { success: false, message: data.message || 'Failed to create user referral source' },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json(data, { status: 200 });
+  } catch (error: any) {
+    console.error('Create user referral source error:', error);
+    return NextResponse.json(
+      { success: false, message: error.message || 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
