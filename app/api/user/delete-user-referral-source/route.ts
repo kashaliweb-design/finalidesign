@@ -19,7 +19,7 @@ export async function DELETE(request: NextRequest) {
     const cookieHeader = `accessToken=${accessToken}`;
 
     // Call backend API
-    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/delete-user-referral-source', {
+    const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-referral-source', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

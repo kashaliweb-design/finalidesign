@@ -51,11 +51,17 @@ export default function ReferralPage() {
 
     setAdding(true);
     try {
+      const authToken = localStorage.getItem("authToken");
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+      if (authToken) {
+        headers["Authorization"] = `Bearer ${authToken}`;
+      }
+      
       const response = await fetch("/api/user/create-user-referral-source", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         credentials: "include",
         body: JSON.stringify({
           source: newSource,

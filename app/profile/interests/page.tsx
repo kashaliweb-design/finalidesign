@@ -50,11 +50,17 @@ export default function InterestsPage() {
 
     setAdding(true);
     try {
+      const authToken = localStorage.getItem("authToken");
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+      if (authToken) {
+        headers["Authorization"] = `Bearer ${authToken}`;
+      }
+      
       const response = await fetch("/api/user/create-user-interest", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         credentials: "include",
         body: JSON.stringify({
           name: newInterest,
