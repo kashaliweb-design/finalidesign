@@ -37,6 +37,17 @@ export async function POST(request: NextRequest) {
     });
 
     console.log('External API response status:', response.status);
+    console.log('External API response content-type:', response.headers.get('content-type'));
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('External API returned non-JSON response:', text.substring(0, 200));
+      return NextResponse.json(
+        { success: false, message: 'Server returned an invalid response. Please try again later.' },
+        { status: response.status || 500 }
+      );
+    }
 
     const data = await response.json();
     console.log('External API response data:', data);

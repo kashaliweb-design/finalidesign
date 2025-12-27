@@ -29,6 +29,16 @@ export async function DELETE(request: NextRequest) {
       credentials: 'include',
     });
 
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('External API returned non-JSON response:', text.substring(0, 200));
+      return NextResponse.json(
+        { success: false, message: 'Server returned an invalid response. Please try again later.' },
+        { status: response.status || 500 }
+      );
+    }
+
     const data = await response.json();
 
     if (!response.ok) {
