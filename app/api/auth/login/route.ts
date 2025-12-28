@@ -39,13 +39,16 @@ export async function POST(request: NextRequest) {
     const nextResponse = NextResponse.json(responseData, { status: 200 });
 
     // Check if backend sent cookies in Set-Cookie header
-    const setCookieHeaders = response.headers.getSetCookie();
-    console.log('Backend Set-Cookie headers count:', setCookieHeaders?.length || 0);
-    console.log('Backend Set-Cookie headers:', setCookieHeaders); // Debug log
+    const setCookieHeader = response.headers.get('set-cookie');
+    console.log('Backend Set-Cookie header:', setCookieHeader); // Debug log
     
-    if (setCookieHeaders && setCookieHeaders.length > 0) {
+    if (setCookieHeader) {
+      // Split multiple cookies if they exist
+      const cookies = setCookieHeader.split(',').map(c => c.trim());
+      console.log('Backend cookies count:', cookies.length);
+      
       // Forward all cookies from backend, but modify for localhost
-      setCookieHeaders.forEach(cookie => {
+      cookies.forEach(cookie => {
         console.log('Original cookie:', cookie);
         // For localhost, remove Secure and change SameSite to Lax
         let modifiedCookie = cookie;
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
         console.log('Modified cookie:', modifiedCookie);
         nextResponse.headers.append('Set-Cookie', modifiedCookie);
       });
-      console.log('Total cookies forwarded:', setCookieHeaders.length);
+      console.log('Total cookies forwarded:', cookies.length);
     } else {
       console.log('No Set-Cookie headers received from backend');
     }
