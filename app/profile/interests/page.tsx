@@ -27,7 +27,6 @@ export default function InterestsPage() {
     try {
       const response = await fetch("/api/user/get-user", {
         method: "GET",
-        credentials: "include",
       });
 
       if (!response.ok) {
@@ -61,7 +60,6 @@ export default function InterestsPage() {
       const response = await fetch("/api/user/create-user-interest", {
         method: "POST",
         headers,
-        credentials: "include",
         body: JSON.stringify({
           name: newInterest,
           category: category || undefined,
@@ -95,7 +93,6 @@ export default function InterestsPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({ interestId }),
       });
 

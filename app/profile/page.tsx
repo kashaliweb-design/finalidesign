@@ -22,7 +22,6 @@ export default function ProfilePage() {
       try {
         const response = await fetch("/api/auth/verify", {
           method: "GET",
-          credentials: "include",
         });
 
         if (!response.ok) {
@@ -62,7 +61,6 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(formData),
       });
 

@@ -57,7 +57,6 @@ export default function AuthPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // Important: This allows cookies to be sent and received
           body: JSON.stringify({
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -93,7 +92,6 @@ export default function AuthPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // Important: This allows cookies to be sent and received
           body: JSON.stringify({
             email: formData.email,
             password: formData.password,
@@ -161,7 +159,6 @@ export default function AuthPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Important: This allows cookies to be sent and received
         body: JSON.stringify({
           email: verificationEmail,
           otp: otp,
@@ -200,7 +197,6 @@ export default function AuthPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({
           email: verificationEmail,
         }),
@@ -244,7 +240,6 @@ export default function AuthPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
       });
 
       const data = await response.json();

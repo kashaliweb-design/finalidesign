@@ -18,7 +18,6 @@ export default function SelectRolePage() {
       try {
         const response = await fetch("/api/auth/verify", {
           method: "GET",
-          credentials: "include",
         });
 
         if (!response.ok) {
@@ -50,7 +49,6 @@ export default function SelectRolePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({ role }),
       });
 

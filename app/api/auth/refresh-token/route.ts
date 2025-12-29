@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
         'Cookie': `token=${token}`,
       },
-      credentials: 'include',
     });
 
     const data = await response.json();

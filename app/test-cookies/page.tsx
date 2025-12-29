@@ -14,7 +14,6 @@ export default function TestCookiesPage() {
   const testVerifyEndpoint = async () => {
     try {
       const response = await fetch("/api/auth/verify", {
-        credentials: "include",
       });
       const data = await response.json();
       setApiResponse(data);

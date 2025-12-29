@@ -100,7 +100,6 @@ export default function OnboardingPage() {
         await fetch("/api/user/create-user-referral-source", {
           method: "POST",
           headers,
-          credentials: "include",
           body: JSON.stringify({ source: selectedSource }),
         });
       } catch (error) {
@@ -130,7 +129,6 @@ export default function OnboardingPage() {
           const response = await fetch("/api/user/create-user-interest", {
             method: "POST",
             headers,
-            credentials: "include",
             body: JSON.stringify({ 
               name: skillsInterests.find(s => s.id === interest)?.name || interest 
             }),

@@ -10,8 +10,24 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-      credentials: 'include', // Important for cookies
     });
+
+    console.log('Backend response status:', response.status);
+    console.log('Backend response content-type:', response.headers.get('content-type'));
+
+    // Check if response is JSON
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const textResponse = await response.text();
+      console.error('Backend returned non-JSON response:', textResponse.substring(0, 200));
+      return NextResponse.json(
+        { 
+          message: 'Backend server error: Expected JSON response but received HTML. The backend server may be down or misconfigured.',
+          details: 'Please check if the backend server at https://srv746619.hstgr.cloud is running correctly.'
+        },
+        { status: 502 }
+      );
+    }
 
     const data = await response.json();
     console.log('Backend signup response:', data); // Debug log

@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
         'Content-Type': 'application/json',
         'Cookie': cookieHeader,
       },
-      credentials: 'include',
     });
 
     console.log('Backend response status:', response.status);

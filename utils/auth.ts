@@ -10,7 +10,6 @@ export async function refreshToken(): Promise<{ success: boolean; message?: stri
   try {
     const response = await fetch('/api/auth/refresh-token', {
       method: 'POST',
-      credentials: 'include',
     });
 
     const data = await response.json();
@@ -42,7 +41,6 @@ export async function verifyAuth(): Promise<{ authenticated: boolean; user?: any
   try {
     const response = await fetch('/api/auth/verify', {
       method: 'GET',
-      credentials: 'include',
     });
 
     if (!response.ok) {
@@ -67,7 +65,6 @@ export async function logout(): Promise<{ success: boolean }> {
   try {
     await fetch('/api/auth/logout', {
       method: 'POST',
-      credentials: 'include',
     });
 
     // Clear localStorage
@@ -99,7 +96,6 @@ export async function updateCurrentRole(role: string): Promise<{ success: boolea
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
       body: JSON.stringify({ role }),
     });
 

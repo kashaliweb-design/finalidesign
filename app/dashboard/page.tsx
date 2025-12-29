@@ -25,7 +25,6 @@ export default function DashboardPage() {
         // If no localStorage data, try to verify with backend
         const response = await fetch("/api/auth/verify", {
           method: "GET",
-          credentials: "include",
         });
 
         if (!response.ok) {
@@ -56,7 +55,6 @@ export default function DashboardPage() {
       try {
         await fetch("/api/auth/refresh-token", {
           method: "POST",
-          credentials: "include",
         });
       } catch (error) {
         console.error("Token refresh failed:", error);
@@ -73,7 +71,6 @@ export default function DashboardPage() {
       
       const response = await fetch("/api/auth/user", {
         method: "GET",
-        credentials: "include",
       });
 
       console.log("Response status:", response.status);
@@ -105,7 +102,6 @@ export default function DashboardPage() {
     try {
       await fetch("/api/auth/logout", {
         method: "POST",
-        credentials: "include",
       });
       
       // Clear localStorage

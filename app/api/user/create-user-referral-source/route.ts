@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
 
     const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-referral-source', {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,

@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
         'Content-Type': 'application/json',
         'Cookie': cookieHeader,
       },
-      credentials: 'include',
     });
 
     const contentType = response.headers.get('content-type');

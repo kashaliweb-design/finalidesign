@@ -28,7 +28,6 @@ export default function ReferralPage() {
     try {
       const response = await fetch("/api/user/get-user", {
         method: "GET",
-        credentials: "include",
       });
 
       if (!response.ok) {
@@ -62,7 +61,6 @@ export default function ReferralPage() {
       const response = await fetch("/api/user/create-user-referral-source", {
         method: "POST",
         headers,
-        credentials: "include",
         body: JSON.stringify({
           source: newSource,
           details: details || undefined,
@@ -96,7 +94,6 @@ export default function ReferralPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({ sourceId }),
       });
 

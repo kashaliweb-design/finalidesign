@@ -41,7 +41,6 @@ export function useAuth() {
 
       // Verify with backend using cookies
       const response = await fetch('/api/auth/verify', {
-        credentials: 'include',
       });
 
       if (response.ok) {
@@ -76,7 +75,6 @@ export function useAuth() {
     try {
       await fetch('/api/auth/logout', {
         method: 'POST',
-        credentials: 'include',
       });
       
       localStorage.removeItem('userData');

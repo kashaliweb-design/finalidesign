@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
         ...(token && { 'Cookie': `token=${token}` }),
       },
-      credentials: 'include',
     });
 
     // Create response

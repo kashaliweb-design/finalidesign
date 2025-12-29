@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
         'Cookie': cookieHeader,
       },
       body: JSON.stringify(body),
-      credentials: 'include',
     });
 
     const data = await response.json();
