@@ -28,13 +28,12 @@ export async function POST(request: NextRequest) {
     console.log('Calling external API with interest:', body.name);
 
     const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-interest', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(body),
-    });
+      method: "POST",
+  credentials: "include",          // <---- REQUIRED
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
+  
 
     console.log('External API response status:', response.status);
     console.log('External API response content-type:', response.headers.get('content-type'));
