@@ -171,6 +171,20 @@ export default function AuthPage() {
         throw new Error(data.message || "Email verification failed");
       }
 
+      // Store auth token in localStorage for onboarding API calls
+      const authToken = data.token || data.accessToken || data.data?.token || data.data?.accessToken;
+      if (authToken) {
+        localStorage.setItem("authToken", authToken);
+        console.log("Auth token stored after verification");
+      }
+
+      // Store user data if available
+      const userData = data.data || data.user || data.userData;
+      if (userData && (userData.firstName || userData.email)) {
+        localStorage.setItem("userData", JSON.stringify(userData));
+        console.log("User data stored after verification");
+      }
+
       setSuccess("Email verified successfully! Redirecting to onboarding...");
       
       // Redirect to onboarding after successful verification

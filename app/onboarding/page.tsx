@@ -97,13 +97,27 @@ export default function OnboardingPage() {
           headers["Authorization"] = `Bearer ${authToken}`;
         }
         
-        await fetch("/api/user/create-user-referral-source", {
+        console.log("Saving referral source with token:", authToken ? "Present" : "Missing");
+        
+        const response = await fetch("/api/user/create-user-referral-source", {
           method: "POST",
           headers,
           body: JSON.stringify({ source: selectedSource }),
         });
+        
+        const result = await response.json();
+        
+        if (!response.ok) {
+          console.error("Failed to save referral source:", result);
+          alert(`Failed to save referral source: ${result.message || 'Unknown error'}`);
+          return;
+        }
+        
+        console.log("Referral source saved successfully:", result);
       } catch (error) {
         console.error("Failed to save referral source:", error);
+        alert("Failed to save referral source. Please try again.");
+        return;
       }
       
       setCurrentStep(1);
@@ -120,26 +134,47 @@ export default function OnboardingPage() {
         
         // Save each interest
         const authToken = localStorage.getItem("authToken");
-        const headers: HeadersInit = { "Content-Type": "application/json" };
-        if (authToken) {
-          headers["Authorization"] = `Bearer ${authToken}`;
+        
+        if (!authToken) {
+          console.error("No auth token found in localStorage");
+          alert("Authentication error. Please login again.");
+          router.push("/auth");
+          return;
         }
         
+        const headers: HeadersInit = { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken}`
+        };
+        
+        let failedInterests = [];
+        
         for (const interest of selectedInterests) {
+          const interestName = skillsInterests.find(s => s.id === interest)?.name || interest;
+          console.log("Saving interest:", interestName);
+          
           const response = await fetch("/api/user/create-user-interest", {
             method: "POST",
             headers,
-            body: JSON.stringify({ 
-              name: skillsInterests.find(s => s.id === interest)?.name || interest 
-            }),
+            body: JSON.stringify({ name: interestName }),
           });
           
+          const result = await response.json();
+          
           if (!response.ok) {
-            console.error("Failed to save interest:", interest, await response.text());
+            console.error("Failed to save interest:", interestName, result);
+            failedInterests.push(interestName);
+          } else {
+            console.log("Interest saved successfully:", interestName, result);
           }
         }
         
-        console.log("All interests saved, marking onboarding complete");
+        if (failedInterests.length > 0) {
+          console.warn("Some interests failed to save:", failedInterests);
+          alert(`Warning: Failed to save some interests: ${failedInterests.join(", ")}`);
+        }
+        
+        console.log("All interests processed, marking onboarding complete");
         
         // Mark onboarding as completed
         localStorage.setItem("onboardingCompleted", "true");
@@ -150,10 +185,7 @@ export default function OnboardingPage() {
         router.push("/dashboard");
       } catch (error) {
         console.error("Failed to save interests:", error);
-        // Mark onboarding as completed even if there's an error
-        localStorage.setItem("onboardingCompleted", "true");
-        router.push("/dashboard");
-      } finally {
+        alert("An error occurred while saving your interests. Please try again.");
         setSubmitting(false);
       }
     }
