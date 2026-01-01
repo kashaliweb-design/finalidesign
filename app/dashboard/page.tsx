@@ -87,14 +87,26 @@ export default function DashboardPage() {
         if (userData) {
           localStorage.setItem("userData", JSON.stringify(userData));
         }
+        
+        alert("User data refreshed successfully!");
       } else {
         const errorData = await response.json();
         console.error("Failed to fetch user data:", response.status, errorData);
-        alert(`Error: ${errorData.message || 'Failed to fetch user data'}`);
+        
+        // Check if it's a database schema error
+        if (errorData.message && errorData.message.includes('emailVerification')) {
+          alert('Backend database error: The server database schema needs to be updated. Please contact the administrator. Using cached data for now.');
+        } else if (response.status === 401) {
+          alert('Session expired. Please login again.');
+          localStorage.clear();
+          router.push('/auth');
+        } else {
+          alert(`Error refreshing data: ${errorData.message || 'Failed to fetch user data'}. Using cached data.`);
+        }
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
-      alert(`Error: ${error}`);
+      alert(`Network error: ${error}. Using cached data.`);
     }
   };
 
