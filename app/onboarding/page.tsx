@@ -19,15 +19,15 @@ export default function OnboardingPage() {
   const [submitting, setSubmitting] = useState(false);
 
   const referralSources = [
-    { id: "youtube", name: "YouTube", icon: "📺" },
-    { id: "facebook", name: "Facebook", icon: "📘" },
-    { id: "instagram", name: "Instagram", icon: "📷" },
-    { id: "twitter", name: "Twitter", icon: "🐦" },
-    { id: "linkedin", name: "LinkedIn", icon: "💼" },
-    { id: "friend", name: "Friend/Family", icon: "👥" },
-    { id: "search", name: "Search Engine", icon: "🔍" },
-    { id: "advertisement", name: "Advertisement", icon: "📢" },
-    { id: "other", name: "Other", icon: "📌" },
+    { id: "YOUTUBE", name: "YouTube", icon: "📺" },
+    { id: "FACEBOOK", name: "Facebook", icon: "📘" },
+    { id: "INSTAGRAM", name: "Instagram", icon: "📷" },
+    { id: "GOOGLE", name: "Google", icon: "🔍" },
+    { id: "LINKEDIN", name: "LinkedIn", icon: "💼" },
+    { id: "FRIEND", name: "Friend/Family", icon: "👥" },
+    { id: "WHATSAPP", name: "WhatsApp", icon: "💬" },
+    { id: "TECH_EVENT", name: "Tech Event", icon: "📢" },
+    { id: "OTHER", name: "Other", icon: "📌" },
   ];
 
   const skillsInterests = [
