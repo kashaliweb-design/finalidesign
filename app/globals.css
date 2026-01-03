@@ -17,9 +17,9 @@
 }
 
 [data-theme="dark"] {
-  --color-bg: #090806;
-  --color-surface: #151310;
-  --color-card: #1c1915;
+  --color-bg: #1C1917;
+  --color-surface: #1C1917;
+  --color-card: #1C1917;
   --color-card-secondary: #221c12;
   --color-heading: #fdf9f2;
   --color-text: #e7dfd3;
@@ -29,8 +29,8 @@
   --color-input-border: #332a20;
   --color-button-bg: #f3ad32;
   --color-button-text: #1c1308;
-  --color-hero-bg: linear-gradient(90deg, #0f0d0b 0%, #1b130c 60%);
-  --color-hero-overlay: rgba(10, 8, 6, 0.75);
+  --color-hero-bg: linear-gradient(90deg, #1C1917 0%, #1b130c 60%);
+  --color-hero-overlay: rgba(28, 25, 23, 0.75);
   --color-shadow: rgba(0, 0, 0, 0.45);
 }
 

@@ -6,7 +6,7 @@ import styles from "./Navbar.module.css";
 import { Search, Globe, BookOpen, ShoppingCart, Bell, User, Sun, Menu } from "lucide-react";
 
 type ThemeMode = "light" | "dark" | "system";
-type DropdownItem = "explore" | "teach" | "theme" | "language" | "learning" | "cart" | "notifications" | "profile" | null;
+type DropdownItem = "explore" | "teach" | "theme" | "language" | "learning" | "cart" | "notifications" | "profile" | "myLearning" | null;
 
 export default function Navbar() {
   const router = useRouter();
@@ -80,23 +80,49 @@ export default function Navbar() {
                 Explore ▾
                 {activeDropdown === 'explore' && (
                   <div className={styles.dropdown}>
+                    {/* Development Column */}
                     <div className={styles.dropCol}>
                       <h4>Development</h4>
-                      <p>Web Development</p>
-                      <p>Mobile Development</p>
-                      <p>Game Development</p>
+                      <div>
+                        <p>Web Development</p>
+                        <p>Mobile Development</p>
+                        <p>Game Development</p>
+                      </div>
                     </div>
+
+                    {/* Business Column */}
                     <div className={styles.dropCol}>
                       <h4>Business</h4>
-                      <p>Entrepreneurship</p>
-                      <p>Finance</p>
-                      <p>Management</p>
+                      <div>
+                        <p>Entrepreneurship</p>
+                        <p>Finance</p>
+                        <p>Management</p>
+                      </div>
                     </div>
+
+                    {/* IT & Software Column */}
                     <div className={styles.dropCol}>
                       <h4>IT & Software</h4>
-                      <p>Certifications</p>
-                      <p>Network & Security</p>
-                      <p>Hardware</p>
+                      <div>
+                        <p>Certifications</p>
+                        <p>Network & Security</p>
+                        <p>Hardware</p>
+                      </div>
+                    </div>
+
+                    {/* Teach on 51Skills Column */}
+                    <div className={styles.dropCol}>
+                      <h4>Teach on 51Skills</h4>
+                      <div>
+                        <p>Instructor Dashboard</p>
+                        <p>Create New Course</p>
+                        <p>Instructor Analytics</p>
+                      </div>
+                    </div>
+
+                    {/* View All Categories */}
+                    <div className={styles.viewAllCategories}>
+                      <p>View all categories →</p>
                     </div>
                   </div>
                 )}
@@ -116,6 +142,15 @@ export default function Navbar() {
                     <p>Analytics</p>
                   </div>
                 )}
+              </div>
+
+              <div
+                className={`${styles.menuItem} ${activeDropdown === 'myLearning' ? styles.active : ''}`}
+                onMouseEnter={() => handleMouseEnter('myLearning')}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick('myLearning')}
+              >
+                My Learning
               </div>
             </div>
           </div>
