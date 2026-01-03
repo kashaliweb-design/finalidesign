@@ -4,6 +4,9 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
+    // 1. Capture the raw cookie string from the incoming browser request
+    const incomingCookieHeader = request.headers.get('cookie') || '';
+    
     const cookies = request.cookies;
     let accessToken = cookies.get('accessToken')?.value || cookies.get('token')?.value;
     
@@ -31,7 +34,10 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
+        // 2. Forward the cookies to the VPS so it recognizes the session
+        'Cookie': incomingCookieHeader, 
+        // We keep the Authorization header as a fallback/secondary check
+        'Authorization': `Bearer ${accessToken}`, 
       },
       body: JSON.stringify(body),
     });
