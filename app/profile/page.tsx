@@ -79,7 +79,7 @@ export default function ProfilePage() {
       <div className={styles.sidebar}>
         <div className={styles.profileHeader}>
           <div className={styles.avatar}>
-            {user.name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+            {user.name?.split(' ').map((n: string) => n[0]).join('').toUpperCase()}
           </div>
           <h3>{user.name}</h3>
           <p>{user.email}</p>
