@@ -30,6 +30,12 @@ export async function POST(request: NextRequest) {
 
     console.log('Calling external API with referral source:', body.source);
 
+    // Convert source to array if it's not already an array (backend expects array)
+    const backendBody = {
+      ...body,
+      source: Array.isArray(body.source) ? body.source : [body.source]
+    };
+
     const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-referral-source', {
       method: 'POST',
       headers: {
@@ -39,7 +45,7 @@ export async function POST(request: NextRequest) {
         // We keep the Authorization header as a fallback/secondary check
         'Authorization': `Bearer ${accessToken}`, 
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(backendBody),
     });
 
     console.log('External API response status:', response.status);
