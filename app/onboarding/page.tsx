@@ -10,8 +10,8 @@ export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [userName, setUserName] = useState("");
   
-  // Step 1: Referral Source
-  const [selectedSource, setSelectedSource] = useState("");
+  // Step 1: Referral Source (Multi-select)
+  const [selectedSources, setSelectedSources] = useState<string[]>([]);
   
   // Step 2: Interests
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
@@ -51,24 +51,43 @@ export default function OnboardingPage() {
 
   const checkAuth = async () => {
     try {
-      // Check if onboarding is already completed
-      const onboardingCompleted = localStorage.getItem("onboardingCompleted");
-      if (onboardingCompleted === "true") {
+      // Check onboarding status from API
+      const response = await fetch("/api/user/get-user", {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        router.push("/auth");
+        return;
+      }
+
+      const data = await response.json();
+      const user = data.user;
+      
+      // Check if user has completed onboarding (has referral sources or interests)
+      const hasReferralSources = user?.referralSources && user.referralSources.length > 0;
+      const hasInterests = user?.interests && user.interests.length > 0;
+      
+      if (hasReferralSources && hasInterests) {
         // User has already completed onboarding, redirect to dashboard
+        localStorage.setItem("onboardingCompleted", "true");
         router.push("/dashboard");
         return;
       }
 
-      // Get user data from localStorage or API
-      const userData = localStorage.getItem("userData");
-      if (userData) {
-        const user = JSON.parse(userData);
-        setUserName(user.firstName || user.userName || "User");
-      }
+      setUserName(user.firstName || user.userName || "User");
       setLoading(false);
     } catch (error) {
       console.error("Failed to get user data:", error);
       router.push("/auth");
+    }
+  };
+
+  const handleSourceToggle = (sourceId: string) => {
+    if (selectedSources.includes(sourceId)) {
+      setSelectedSources(selectedSources.filter((id) => id !== sourceId));
+    } else {
+      setSelectedSources([...selectedSources, sourceId]);
     }
   };
 
@@ -84,9 +103,9 @@ export default function OnboardingPage() {
     console.log("handleNext called, currentStep:", currentStep);
     
     if (currentStep === 0) {
-      // Step 1: Save referral source
-      if (!selectedSource) {
-        alert("Please select how you found us");
+      // Step 1: Save referral sources (multi-select)
+      if (selectedSources.length === 0) {
+        alert("Please select at least one option for how you found us");
         return;
       }
       
@@ -97,26 +116,26 @@ export default function OnboardingPage() {
           headers["Authorization"] = `Bearer ${authToken}`;
         }
         
-        console.log("Saving referral source with token:", authToken ? "Present" : "Missing");
+        console.log("Saving referral sources with token:", authToken ? "Present" : "Missing");
         
         const response = await fetch("/api/user/create-user-referral-source", {
           method: "POST",
           headers,
-          body: JSON.stringify({ source: selectedSource }),
+          body: JSON.stringify({ source: selectedSources }),
         });
         
         const result = await response.json();
         
         if (!response.ok) {
-          console.error("Failed to save referral source:", result);
-          alert(`Failed to save referral source: ${result.message || 'Unknown error'}`);
+          console.error("Failed to save referral sources:", result);
+          alert(`Failed to save referral sources: ${result.message || 'Unknown error'}`);
           return;
         }
         
-        console.log("Referral source saved successfully:", result);
+        console.log("Referral sources saved successfully:", result);
       } catch (error) {
-        console.error("Failed to save referral source:", error);
-        alert("Failed to save referral source. Please try again.");
+        console.error("Failed to save referral sources:", error);
+        alert("Failed to save referral sources. Please try again.");
         return;
       }
       
@@ -192,9 +211,13 @@ export default function OnboardingPage() {
   };
 
   const handleSkip = () => {
-    // Mark onboarding as completed when skipped
-    localStorage.setItem("onboardingCompleted", "true");
-    router.push("/dashboard");
+    // Smart skip: Step 0 (Referral) -> Step 1 (Interest), Step 1 (Interest) -> Dashboard
+    if (currentStep === 0) {
+      setCurrentStep(1);
+    } else if (currentStep === 1) {
+      localStorage.setItem("onboardingCompleted", "true");
+      router.push("/dashboard");
+    }
   };
 
   if (loading) {
@@ -245,12 +268,15 @@ export default function OnboardingPage() {
                   <div
                     key={source.id}
                     className={`${styles.optionCard} ${
-                      selectedSource === source.id ? styles.selected : ""
+                      selectedSources.includes(source.id) ? styles.selected : ""
                     }`}
-                    onClick={() => setSelectedSource(source.id)}
+                    onClick={() => handleSourceToggle(source.id)}
                   >
                     <div className={styles.optionIcon}>{source.icon}</div>
                     <div className={styles.optionName}>{source.name}</div>
+                    {selectedSources.includes(source.id) && (
+                      <div className={styles.checkmark}>✓</div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -258,7 +284,7 @@ export default function OnboardingPage() {
               <div className={styles.stepActions}>
                 <button
                   onClick={handleNext}
-                  disabled={!selectedSource}
+                  disabled={selectedSources.length === 0}
                   className={styles.primaryBtn}
                 >
                   Next

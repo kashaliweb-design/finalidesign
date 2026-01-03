@@ -398,9 +398,15 @@
   color: white;
 }
 
-.primaryBtn:hover {
+.primaryBtn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .secondaryBtn {
