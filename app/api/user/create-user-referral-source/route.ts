@@ -30,10 +30,13 @@ export async function POST(request: NextRequest) {
 
     console.log('Calling external API with referral source:', body.source);
 
-    // Convert source to array if it's not already an array (backend expects array)
+    // Convert source to array and uppercase if it's not already an array (backend expects array with uppercase values)
+    let sourceArray = Array.isArray(body.source) ? body.source : [body.source];
+    sourceArray = sourceArray.map((s: string) => s.toUpperCase());
+    
     const backendBody = {
       ...body,
-      source: Array.isArray(body.source) ? body.source : [body.source]
+      source: sourceArray
     };
 
     const response = await fetch('https://srv746619.hstgr.cloud/api/v1/user/user-referral-source', {
